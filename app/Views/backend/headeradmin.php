@@ -114,55 +114,103 @@
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
-          <?php if (session('role') === 'admin'): ?>
-          <li class="nav-item <?= (current_url() == base_url('kategori')) ? 'active' : '' ?>">
-            <a class="nav-link <?= (current_url() == base_url('kategori')) ? 'active' : '' ?>" href="<?= base_url('kategori') ?>">
-              <i class="ni ni-planet text-blue"></i> Kategori
+          
+          <!-- Konten Website -->
+          <li class="nav-item">
+            <a class="nav-link" href="#navbar-konten" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-konten">
+              <i class="ni ni-collection text-info"></i>
+              <span class="nav-link-text">Konten Website</span>
             </a>
+            <div class="collapse" id="navbar-konten">
+              <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('berita') ?>">
+                    <i class="ni ni-pin-3 text-orange"></i> Berita
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('halaman') ?>">
+                    <i class="ni ni-collection text-purple"></i> Halaman
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('galeri') ?>">
+                    <i class="ni ni-image text-pink"></i> Galeri
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('slide') ?>">
+                    <i class="fas fa-images text-blue"></i> Slide
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
-          <li class="nav-item <?= (current_url() == base_url('berita')) ? 'active' : '' ?>">
-            <a class="nav-link <?= (current_url() == base_url('berita')) ? 'active' : '' ?>" href="<?= base_url('berita') ?>">
-              <i class="ni ni-pin-3 text-orange"></i> Berita
+          
+          <!-- Kategori -->
+          <li class="nav-item">
+            <a class="nav-link" href="#navbar-kategori" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-kategori">
+              <i class="ni ni-tag text-warning"></i>
+              <span class="nav-link-text">Kategori</span>
             </a>
+            <div class="collapse" id="navbar-kategori">
+              <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('kategori') ?>">
+                    <i class="ni ni-planet text-blue"></i> Kategori Berita
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('kategori-download') ?>">
+                    <i class="ni ni-folder-17 text-green"></i> Kategori Download
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
-          <li class="nav-item <?= (current_url() == base_url('kategori-download')) ? 'active' : '' ?>">
-            <a class="nav-link <?= (current_url() == base_url('kategori-download')) ? 'active' : '' ?>" href="<?= base_url('kategori-download') ?>">
-              <i class="ni ni-folder-17 text-green"></i> Kategori Download
-            </a>
-          </li>
-          <li class="nav-item <?= (current_url() == base_url('halaman')) ? 'active' : '' ?>">
-            <a class="nav-link <?= (current_url() == base_url('halaman')) ? 'active' : '' ?>" href="<?= base_url('halaman') ?>">
-              <i class="ni ni-collection text-purple"></i> Halaman
-            </a>
-          </li>
-          <li class="nav-item <?= (current_url() == base_url('galeri')) ? 'active' : '' ?>">
-            <a class="nav-link <?= (current_url() == base_url('galeri')) ? 'active' : '' ?>" href="<?= base_url('galeri') ?>">
-              <i class="ni ni-image text-pink"></i> Galeri
-            </a>
-          </li>
-          <?php endif; ?>
+          
+          <!-- Download -->
           <li class="nav-item <?= (current_url() == base_url('download')) ? 'active' : '' ?>">
             <a class="nav-link <?= (current_url() == base_url('download')) ? 'active' : '' ?>" href="<?= base_url('download') ?>">
-              <i class="ni ni-key-25 text-info ni"></i> Download
+              <i class="ni ni-key-25 text-info"></i> Download
             </a>
           </li>
-          <?php if (session('role') === 'admin'): ?>
-          <li class="nav-item <?= (current_url() == base_url('slide')) ? 'active' : '' ?>">
-            <a class="nav-link <?= (current_url() == base_url('slide')) ? 'active' : '' ?>" href="<?= base_url('slide') ?>">
-              <i class="fas fa-box"></i> Slide
+          
+          <!-- Pesan Kontak -->
+          <li class="nav-item <?= (current_url() == base_url('pesan-kontak')) ? 'active' : '' ?>">
+            <a class="nav-link <?= (current_url() == base_url('pesan-kontak')) ? 'active' : '' ?>" href="<?= base_url('pesan-kontak') ?>">
+              <i class="ni ni-email-83 text-orange"></i> Pesan Kontak
             </a>
           </li>
-          <li class="nav-item <?= (current_url() == base_url('user')) ? 'active' : '' ?>">
-            <a class="nav-link <?= (current_url() == base_url('user')) ? 'active' : '' ?>" href="<?= base_url('user') ?>">
-              <i class="ni ni-single-02 text-yellow"></i> User
+          
+          <!-- FAQ -->
+          <li class="nav-item <?= (current_url() == base_url('faq')) ? 'active' : '' ?>">
+            <a class="nav-link <?= (current_url() == base_url('faq')) ? 'active' : '' ?>" href="<?= base_url('faq') ?>">
+              <i class="ni ni-chat-round text-info"></i> FAQ
             </a>
           </li>
-          <li class="nav-item <?= (current_url() == base_url('profil')) ? 'active' : '' ?>">
-            <a class="nav-link <?= (current_url() == base_url('profil')) ? 'active' : '' ?>" href="<?= base_url('profil') ?>">
-              <i class="ni ni-settings-gear-65 text-default"></i> Profil Website
+          
+          <!-- Manajemen Sistem -->
+          <li class="nav-item">
+            <a class="nav-link" href="#navbar-sistem" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-sistem">
+              <i class="ni ni-settings-gear-65 text-default"></i>
+              <span class="nav-link-text">Manajemen</span>
             </a>
+            <div class="collapse" id="navbar-sistem">
+              <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('user') ?>">
+                    <i class="ni ni-single-02 text-yellow"></i> User
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('profil') ?>">
+                    <i class="ni ni-settings-gear-65 text-default"></i> Profil Website
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
-          <?php endif; ?>
         </ul>
         <!-- Divider -->
        

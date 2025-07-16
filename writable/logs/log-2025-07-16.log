@@ -1,0 +1,98 @@
+INFO - 2025-07-16 05:59:00 --> Active slides data: [{"id_slide":"1","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590042_d0953f6276e2d460d4f6.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-14 20:23:10","updated_at":"2025-07-15 21:34:49"},{"id_slide":"2","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590060_1b80f6cee41da2e6a1b4.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-15 13:12:36","updated_at":"2025-07-15 21:34:52"}]
+DEBUG - 2025-07-16 05:59:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 05:59:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 05:59:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 05:59:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:14:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:14:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:15:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:15:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:15:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:15:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-07-16 06:17:16 --> Active slides data: [{"id_slide":"1","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590042_d0953f6276e2d460d4f6.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-14 20:23:10","updated_at":"2025-07-15 21:34:49"},{"id_slide":"2","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590060_1b80f6cee41da2e6a1b4.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-15 13:12:36","updated_at":"2025-07-15 21:34:52"}]
+DEBUG - 2025-07-16 06:22:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:22:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:22:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:22:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:27:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:28:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:28:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:37:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:39:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:39:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:46:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 06:59:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-07-16 06:59:43 --> mysqli_sql_exception: Table 'db_dokkes.faq' doesn't exist in D:\laragon\www\Biddokkes\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 D:\laragon\www\Biddokkes\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*)...', 0)
+#1 D:\laragon\www\Biddokkes\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 D:\laragon\www\Biddokkes\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 D:\laragon\www\Biddokkes\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 D:\laragon\www\Biddokkes\system\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+#5 D:\laragon\www\Biddokkes\app\Controllers\Dashboard.php(37): CodeIgniter\Model->countAllResults()
+#6 D:\laragon\www\Biddokkes\system\CodeIgniter.php(933): App\Controllers\Dashboard->admin()
+#7 D:\laragon\www\Biddokkes\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#8 D:\laragon\www\Biddokkes\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\laragon\www\Biddokkes\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#10 D:\laragon\www\Biddokkes\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\laragon\www\Biddokkes\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-07-16 06:59:43 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'db_dokkes.faq' doesn't exist
+[Method: GET, Route: dashboard/admin]
+in SYSTEMPATH\Database\BaseConnection.php on line 692.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `faq`', [], false)
+ 2 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 3 APPPATH\Controllers\Dashboard.php(37): CodeIgniter\Model->countAllResults()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->admin()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-07-16 06:59:43 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'db_dokkes.faq' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `faq`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `faq`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `faq`', [], false)
+ 4 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 5 APPPATH\Controllers\Dashboard.php(37): CodeIgniter\Model->countAllResults()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->admin()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-07-16 06:59:43 --> [Caused by] mysqli_sql_exception: Table 'db_dokkes.faq' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*) AS `numrows`
+FROM `faq`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `faq`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `faq`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `faq`', [], false)
+ 5 SYSTEMPATH\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 6 APPPATH\Controllers\Dashboard.php(37): CodeIgniter\Model->countAllResults()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->admin()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-07-16 07:00:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 07:00:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 07:00:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 07:00:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 07:00:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 07:00:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 07:01:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-16 07:01:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-07-16 07:01:39 --> Active slides data: [{"id_slide":"1","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590042_d0953f6276e2d460d4f6.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-14 20:23:10","updated_at":"2025-07-15 21:34:49"},{"id_slide":"2","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590060_1b80f6cee41da2e6a1b4.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-15 13:12:36","updated_at":"2025-07-15 21:34:52"}]
+INFO - 2025-07-16 07:01:42 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-16 07:01:51 --> Active slides data: [{"id_slide":"1","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590042_d0953f6276e2d460d4f6.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-14 20:23:10","updated_at":"2025-07-15 21:34:49"},{"id_slide":"2","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590060_1b80f6cee41da2e6a1b4.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-15 13:12:36","updated_at":"2025-07-15 21:34:52"}]
+INFO - 2025-07-16 07:02:16 --> Active slides data: [{"id_slide":"1","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590042_d0953f6276e2d460d4f6.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-14 20:23:10","updated_at":"2025-07-15 21:34:49"},{"id_slide":"2","judul":"BIDDOKKES POLDA","deskripsi":"Bidang Kedokteran dan Kesehatan Kepolisian Daerah Lampung","gambar":"1752590060_1b80f6cee41da2e6a1b4.jpg","link":"","urutan":"1","status":"aktif","created_at":"2025-07-15 13:12:36","updated_at":"2025-07-15 21:34:52"}]

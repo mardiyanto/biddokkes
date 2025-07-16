@@ -110,4 +110,31 @@ $routes->get('fronthalaman/(:segment)', 'Halaman::show/$1');
 // Frontend routes (galeri) - legacy
 $routes->get('frontgaleri', 'Galeri::frontend');
 
+// Pesan Kontak Routes
+$routes->get('pesan-kontak', 'PesanKontak::index');
+$routes->get('pesan-kontak/show/(:num)', 'PesanKontak::show/$1');
+$routes->get('pesan-kontak/reply/(:num)', 'PesanKontak::reply/$1');
+$routes->post('pesan-kontak/reply/(:num)', 'PesanKontak::reply/$1');
+$routes->get('pesan-kontak/delete/(:num)', 'PesanKontak::delete/$1');
+$routes->get('pesan-kontak/mark-as-read/(:num)', 'PesanKontak::markAsRead/$1');
+$routes->post('pesan-kontak/mark-as-replied/(:num)', 'PesanKontak::markAsReplied/$1');
+$routes->post('pesan-kontak/bulk-action', 'PesanKontak::bulkAction');
+$routes->get('pesan-kontak/export', 'PesanKontak::export');
+
+// Frontend Contact
+$routes->post('send-contact', 'Frontend::sendContact');
+
+// FAQ Routes
+$routes->get('faq', 'Faq::index');
+$routes->get('faq/create', 'Faq::create');
+$routes->post('faq/create', 'Faq::create');
+$routes->get('faq/edit/(:num)', 'Faq::edit/$1');
+$routes->post('faq/edit/(:num)', 'Faq::edit/$1');
+$routes->get('faq/delete/(:num)', 'Faq::delete/$1');
+$routes->get('faq/toggle-status/(:num)', 'Faq::toggleStatus/$1');
+$routes->post('faq/bulk-action', 'Faq::bulkAction');
+$routes->post('faq/reorder', 'Faq::reorder');
+$routes->get('faq/export', 'Faq::export');
+$routes->get('faq/next-urutan', 'Faq::getNextUrutan');
+
 

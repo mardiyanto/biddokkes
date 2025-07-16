@@ -278,17 +278,85 @@ class Frontend extends BaseController
     {
         try {
             $profilModel = new \App\Models\ProfilModel();
+            $faqModel = new \App\Models\FaqModel();
+            
             $profilWebsite = $profilModel->getProfil();
+            $faqs = $faqModel->getFaqsForFrontend();
             
             return view('frontend/contact', [
-                'profilWebsite' => $profilWebsite
+                'profilWebsite' => $profilWebsite,
+                'faqs' => $faqs
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend contact error: ' . $e->getMessage());
             
             return view('frontend/contact', [
-                'profilWebsite' => null
+                'profilWebsite' => null,
+                'faqs' => []
             ]);
+        }
+    }
+    
+    public function sendContact()
+    {
+        if ($this->request->getMethod() !== 'post') {
+            return redirect()->to('/contact')->with('error', 'Metode tidak valid.');
+        }
+
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'nama' => 'required|min_length[3]|max_length[255]',
+            'email' => 'required|valid_email|max_length[255]',
+            'telepon' => 'permit_empty|max_length[20]',
+            'subjek' => 'required|max_length[255]',
+            'pesan' => 'required|min_length[10]',
+            'setuju' => 'required'
+        ], [
+            'nama' => [
+                'required' => 'Nama harus diisi',
+                'min_length' => 'Nama minimal 3 karakter',
+                'max_length' => 'Nama maksimal 255 karakter'
+            ],
+            'email' => [
+                'required' => 'Email harus diisi',
+                'valid_email' => 'Format email tidak valid',
+                'max_length' => 'Email maksimal 255 karakter'
+            ],
+            'telepon' => [
+                'max_length' => 'Telepon maksimal 20 karakter'
+            ],
+            'subjek' => [
+                'required' => 'Subjek harus diisi',
+                'max_length' => 'Subjek maksimal 255 karakter'
+            ],
+            'pesan' => [
+                'required' => 'Pesan harus diisi',
+                'min_length' => 'Pesan minimal 10 karakter'
+            ],
+            'setuju' => [
+                'required' => 'Anda harus menyetujui kebijakan privasi'
+            ]
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
+        $pesanKontakModel = new \App\Models\PesanKontakModel();
+        
+        $data = [
+            'nama' => $this->request->getPost('nama'),
+            'email' => $this->request->getPost('email'),
+            'telepon' => $this->request->getPost('telepon'),
+            'subjek' => $this->request->getPost('subjek'),
+            'pesan' => $this->request->getPost('pesan'),
+            'status' => 'baru'
+        ];
+
+        if ($pesanKontakModel->insert($data)) {
+            return redirect()->to('/contact')->with('success', 'Pesan Anda berhasil dikirim. Kami akan segera menghubungi Anda.');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Gagal mengirim pesan. Silakan coba lagi.');
         }
     }
     
