@@ -6,12 +6,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-header-content text-center">
-                    <h1 class="page-title">Detail Berita</h1>
+                    <h1 class="page-title"><?= esc($berita['judul'] ?? 'Detail Berita') ?></h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a href="<?= base_url() ?>">Beranda</a></li>
                             <li class="breadcrumb-item"><a href="<?= base_url('frontberita') ?>">Berita</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><?= $berita['judul'] ?? 'Berita' ?></li>
+                            <li class="breadcrumb-item active" aria-current="page"><?= esc($berita['judul'] ?? 'Berita') ?></li>
                         </ol>
                     </nav>
                 </div>
@@ -20,61 +20,144 @@
     </div>
 </section>
 
-<!-- News Detail Section -->
-<section class="news-detail-section py-5">
+<!-- Page Content Section -->
+<section class="page-content-section py-5">
     <div class="container">
         <div class="row">
+            <!-- Sidebar - Berita Terkait -->
+            <div class="col-lg-4 mb-4">
+                <!-- Related News -->
+                <?php if (!empty($berita_terkait)): ?>
+                <div class="sidebar-widget mb-4" data-aos="fade-right">
+                    <h4 class="widget-title">Berita Terkait</h4>
+                    <div class="related-news">
+                        <?php foreach ($berita_terkait as $related): ?>
+                        <div class="related-news-item">
+                            <div class="related-news-image">
+                                <?php if ($related['gambar']): ?>
+                                <img src="<?= base_url('uploads/artikel/' . $related['gambar']) ?>" 
+                                     alt="<?= $related['judul'] ?? 'Gambar Berita Terkait' ?>" 
+                                     class="img-fluid">
+                                <?php else: ?>
+                                <img src="<?= base_url('assets/images/default-news.jpg') ?>" 
+                                     alt="<?= $related['judul'] ?? 'Gambar Berita Terkait' ?>" 
+                                     class="img-fluid">
+                                <?php endif; ?>
+                            </div>
+                            <div class="related-news-content">
+                                <h6 class="related-news-title">
+                                    <a href="<?= base_url('frontberita/detail/' . $related['id_berita']) ?>"><?= $related['judul'] ?? 'Judul Berita Terkait' ?></a>
+                                </h6>
+                                <div class="related-news-meta">
+                                    <span><i class="fas fa-calendar me-1"></i><?= date('d M Y', strtotime($related['created_at'] ?? '')) ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+           
+                <?php 
+                        $beritaModel = new \App\Models\BeritaModel();
+                        $latest_news = $beritaModel->getLatest(5);
+                        foreach ($latest_news as $latest): 
+                        ?>
+                    <div  class="sidebar-widget mb-4" data-aos="fade-right" data-aos-delay="100" >
+                    <h4 class="widget-title">Berita Terkait</h4>
+                        <div class="related-page-card">
+                        <?php if ($latest['gambar']): ?>
+                            <div class="related-page-image">
+                            <?php if ($latest['gambar']): ?>
+                                <img src="<?= base_url('uploads/artikel/' . $latest['gambar']) ?>" 
+                                     alt="<?= $latest['judul'] ?? 'Gambar Berita Terbaru' ?>" 
+                                     class="img-fluid">
+                                <?php else: ?>
+                                <img src="<?= base_url('assets/images/default-news.jpg') ?>" 
+                                     alt="<?= $latest['judul'] ?? 'Gambar Berita Terbaru' ?>" 
+                                     class="img-fluid">
+                                <?php endif; ?>
+                            </div>
+                            <?php endif; ?>
+                            <div class="related-page-content">
+                                <h5 class="related-page-title">
+                                    <a href="<?= base_url('frontberita/detail/' . $latest['id_berita']) ?>"><?= $latest['judul'] ?? 'Judul Berita Terbaru' ?></a>
+                                </h5>
+                                <p class="related-page-excerpt">
+                                    <?= substr(strip_tags($latest['isi']), 0, 100) ?>...
+                                </p>
+                                <div class="related-page-meta">
+                                    <span><i class="fas fa-calendar me-1"></i><?= date('d M Y', strtotime($latest['created_at'] ?? '')) ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <?php endforeach; ?>
+       
+                
+                <!-- Categories -->
+                <div class="sidebar-widget" data-aos="fade-right" data-aos-delay="200">
+                
+                    <h4 class="widget-title">Kategori</h4>
+                    <div class="related-page-card">
+                    <div class="related-page-content">
+                        <?php 
+                        $kategoriModel = new \App\Models\KategoriModel();
+                        $kategoris = $kategoriModel->findAll();
+                        foreach ($kategoris as $kat): 
+                        ?>
+                        <a href="<?= base_url('berita?kategori=' . $kat['id_kategori']) ?>" class="category-item">
+                            <span class="category-name"><?= $kat['nama_kategori'] ?? 'Nama Kategori' ?></span>
+                            <span class="category-count">(<?= $kategoriModel->getBeritaCountByKategori($kat['id_kategori']) ?? 0 ?>)</span>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Main Content -->
-            <div class="col-lg-8 mb-5">
-                <article class="news-detail" data-aos="fade-up">
-                    <!-- News Header -->
-                    <div class="news-header mb-4">
-                        <div class="news-meta mb-3">
-                            <span class="category-badge"><?= $berita['nama_kategori'] ?? 'Kategori' ?></span>
-                            <span class="news-date">
-                                <i class="fas fa-calendar me-1"></i>
-                                <?= date('d F Y', strtotime($berita['created_at'] ?? '')) ?>
-                            </span>
-                            <span class="news-author">
-                                <i class="fas fa-user me-1"></i>
-                                <?= $berita['penulis'] ?? 'Penulis' ?>
-                            </span>
-                            <span class="news-views">
-                                <i class="fas fa-eye me-1"></i>
-                                <?= $berita['view_count'] ?? 0 ?> views
-                            </span>
+            <div class="col-lg-8">
+                <article class="page-content" data-aos="fade-left">
+                    <!-- Page Header -->
+                    <div class="page-header-content mb-4">
+                        <div class="page-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-folder me-2"></i>
+                                <span>Kategori: <?= esc($berita['nama_kategori'] ?? 'Kategori') ?></span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-user me-2"></i>
+                                <span>Penulis: <?= esc($berita['penulis'] ?? 'Admin') ?></span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-calendar me-2"></i>
+                                <span>Diterbitkan: <?= date('d F Y', strtotime($berita['created_at'] ?? '')) ?></span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-eye me-2"></i>
+                                <span><?= $berita['view_count'] ?? 0 ?> views</span>
+                            </div>
                         </div>
                         
-                        <h1 class="news-title"><?= $berita['judul'] ?? 'Judul Berita' ?></h1>
-                        
                         <?php if ($berita['gambar']): ?>
-                        <div class="news-image-wrapper mb-4">
+                        <div class="page-image-wrapper mb-4">
                             <img src="<?= base_url('uploads/artikel/' . $berita['gambar']) ?>" 
-                                 alt="<?= $berita['judul'] ?? 'Gambar Berita' ?>" 
+                                 alt="<?= esc($berita['judul'] ?? 'Gambar Berita') ?>" 
                                  class="img-fluid rounded">
                         </div>
                         <?php endif; ?>
                     </div>
                     
-                    <!-- News Content -->
-                    <div class="news-content">
-                        <?= $berita['konten'] ?? 'Tidak ada konten berita.' ?>
+                    <!-- Page Content -->
+                    <div class="content-body">
+                        <?= $berita['konten'] ?? $berita['isi'] ?? 'Tidak ada konten berita.' ?>
                     </div>
                     
-                    <!-- News Footer -->
-                    <div class="news-footer mt-5">
-                        <div class="news-tags">
-                            <h6 class="mb-3">Tag:</h6>
-                            <div class="tag-list">
-                                <span class="tag">Biddokkes</span>
-                                <span class="tag">POLRI</span>
-                                <span class="tag">Kesehatan</span>
-                                <span class="tag"><?= $berita['nama_kategori'] ?? 'Kategori' ?></span>
-                            </div>
-                        </div>
-                        
-                        <div class="news-share mt-4">
-                            <h6 class="mb-3">Bagikan:</h6>
+                    <!-- Page Footer -->
+                    <div class="page-footer mt-5">
+                        <div class="page-share">
+                            <h6 class="mb-3">Bagikan berita ini:</h6>
                             <div class="share-buttons">
                                 <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode(current_url()) ?>" 
                                    target="_blank" class="share-btn facebook">
@@ -97,104 +180,18 @@
                     </div>
                 </article>
             </div>
-            
-            <!-- Sidebar -->
-            <div class="col-lg-4">
-                <!-- Related News -->
-                <?php if (!empty($berita_terkait)): ?>
-                <div class="sidebar-widget mb-5" data-aos="fade-left">
-                    <h4 class="widget-title">Berita Terkait</h4>
-                    <div class="related-news">
-                        <?php foreach ($berita_terkait as $related): ?>
-                        <div class="related-news-item">
-                            <div class="related-news-image">
-                                <?php if ($related['gambar']): ?>
-                                <img src="<?= base_url('uploads/artikel/' . $related['gambar']) ?>" 
-                                     alt="<?= $related['judul'] ?? 'Gambar Berita Terkait' ?>" 
-                                     class="img-fluid">
-                                <?php else: ?>
-                                <img src="<?= base_url('assets/images/default-news.jpg') ?>" 
-                                     alt="<?= $related['judul'] ?? 'Gambar Berita Terkait' ?>" 
-                                     class="img-fluid">
-                                <?php endif; ?>
-                            </div>
-                            <div class="related-news-content">
-                                <h6 class="related-news-title">
-                                    <a href="<?= base_url('frontberita/' . $related['slug']) ?>"><?= $related['judul'] ?? 'Judul Berita Terkait' ?></a>
-                                </h6>
-                                <div class="related-news-meta">
-                                    <span><i class="fas fa-calendar me-1"></i><?= date('d M Y', strtotime($related['created_at'] ?? '')) ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <?php endif; ?>
-                
-                <!-- Latest News -->
-                <div class="sidebar-widget mb-5" data-aos="fade-left" data-aos-delay="100">
-                    <h4 class="widget-title">Berita Terbaru</h4>
-                    <div class="latest-news">
-                        <?php 
-                        $beritaModel = new \App\Models\BeritaModel();
-                        $latest_news = $beritaModel->getLatest(5);
-                        foreach ($latest_news as $latest): 
-                        ?>
-                        <div class="latest-news-item">
-                            <div class="latest-news-image">
-                                <?php if ($latest['gambar']): ?>
-                                <img src="<?= base_url('uploads/artikel/' . $latest['gambar']) ?>" 
-                                     alt="<?= $latest['judul'] ?? 'Gambar Berita Terbaru' ?>" 
-                                     class="img-fluid">
-                                <?php else: ?>
-                                <img src="<?= base_url('assets/images/default-news.jpg') ?>" 
-                                     alt="<?= $latest['judul'] ?? 'Gambar Berita Terbaru' ?>" 
-                                     class="img-fluid">
-                                <?php endif; ?>
-                            </div>
-                            <div class="latest-news-content">
-                                <h6 class="latest-news-title">
-                                    <a href="<?= base_url('frontberita/' . $latest['slug']) ?>"><?= $latest['judul'] ?? 'Judul Berita Terbaru' ?></a>
-                                </h6>
-                                <div class="latest-news-meta">
-                                    <span><i class="fas fa-calendar me-1"></i><?= date('d M Y', strtotime($latest['created_at'] ?? '')) ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                
-                <!-- Categories -->
-                <div class="sidebar-widget" data-aos="fade-left" data-aos-delay="200">
-                    <h4 class="widget-title">Kategori</h4>
-                    <div class="category-list">
-                        <?php 
-                        $kategoriModel = new \App\Models\KategoriModel();
-                        $kategoris = $kategoriModel->findAll();
-                        foreach ($kategoris as $kat): 
-                        ?>
-                        <a href="<?= base_url('berita?kategori=' . $kat['id_kategori']) ?>" class="category-item">
-                            <span class="category-name"><?= $kat['nama_kategori'] ?? 'Nama Kategori' ?></span>
-                            <span class="category-count">(<?= $kategoriModel->getBeritaCountByKategori($kat['id_kategori']) ?? 0 ?>)</span>
-                        </a>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
 
 <!-- Newsletter Section -->
-<section class="newsletter-section py-5">
+<section class="cta-section py-5">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center" data-aos="fade-up">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-center">
                 <div class="newsletter-content">
-                    <h3 class="section-title text-white mb-3">Berlangganan Newsletter</h3>
-                    <p class="text-light mb-4">Dapatkan berita terbaru dan informasi penting dari Biddokkes POLRI langsung ke email Anda.</p>
+                    <h3 class="cta-title">Berlangganan Newsletter</h3>
+                    <p class="cta-description">Dapatkan berita terbaru dan informasi penting dari Biddokkes POLRI langsung ke email Anda.</p>
                     
                     <form class="newsletter-form" id="newsletterForm">
                         <div class="row justify-content-center">
@@ -258,6 +255,67 @@
                 });
             }
         });
+    });
+    
+    // Add table of contents functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const headings = document.querySelectorAll('.content-body h1, .content-body h2, .content-body h3');
+        
+        if (headings.length > 3) {
+            // Create table of contents
+            const toc = document.createElement('div');
+            toc.className = 'table-of-contents mb-4';
+            toc.innerHTML = '<h4>Daftar Isi</h4><ul></ul>';
+            
+            const tocList = toc.querySelector('ul');
+            
+            headings.forEach((heading, index) => {
+                const id = 'heading-' + index;
+                heading.id = id;
+                
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#' + id;
+                a.textContent = heading.textContent;
+                a.className = 'toc-link';
+                
+                li.appendChild(a);
+                tocList.appendChild(li);
+            });
+            
+            // Insert TOC after first paragraph
+            const firstP = document.querySelector('.content-body p');
+            if (firstP) {
+                firstP.parentNode.insertBefore(toc, firstP.nextSibling);
+            }
+        }
+    });
+    
+    // Add reading progress indicator
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.body.offsetHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        
+        // Create progress bar if it doesn't exist
+        let progressBar = document.getElementById('reading-progress');
+        if (!progressBar) {
+            progressBar = document.createElement('div');
+            progressBar.id = 'reading-progress';
+            progressBar.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 3px;
+                background: linear-gradient(135deg, var(--primary-navy), var(--accent-blue));
+                z-index: 9999;
+                transition: width 0.3s ease;
+            `;
+            document.body.appendChild(progressBar);
+        }
+        
+        progressBar.style.width = scrollPercent + '%';
     });
 </script>
 

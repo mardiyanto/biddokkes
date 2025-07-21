@@ -92,6 +92,14 @@ class BeritaModel extends Model
                     ->first();
     }
     
+    public function getBeritaById($id_berita)
+    {
+        return $this->select('berita.*, kategori.nama_kategori')
+                    ->join('kategori', 'kategori.id_kategori = berita.id_kategori')
+                    ->where('berita.id_berita', $id_berita)
+                    ->first();
+    }
+    
     public function getRelatedBerita($id_berita, $id_kategori, $limit = 3)
     {
         return $this->select('berita.*, kategori.nama_kategori')

@@ -23,6 +23,7 @@ class Dashboard extends BaseController
         $galeriModel = new \App\Models\GaleriModel();
         $pesanKontakModel = new \App\Models\PesanKontakModel();
         $faqModel = new \App\Models\FaqModel();
+        $statsModel = new \App\Models\StatsModel();
         
         // Statistik umum
         $jumlah_user = $userModel->countAllResults();
@@ -35,6 +36,7 @@ class Dashboard extends BaseController
         $jumlah_galeri = $galeriModel->countAllResults();
         $jumlah_pesan = $pesanKontakModel->countAllResults();
         $jumlah_faq = $faqModel->countAllResults();
+        $jumlah_stats = $statsModel->countAllResults();
         
         // Statistik pesan kontak
         $pesan_statistics = $pesanKontakModel->getStatistics();
@@ -101,6 +103,7 @@ class Dashboard extends BaseController
             'jumlah_galeri' => $jumlah_galeri,
             'jumlah_pesan' => $jumlah_pesan,
             'jumlah_faq' => $jumlah_faq,
+            'jumlah_stats' => $jumlah_stats,
             'pesan_statistics' => $pesan_statistics,
             'slide_aktif' => $slide_aktif,
             'slide_nonaktif' => $slide_nonaktif,
@@ -136,6 +139,7 @@ class Dashboard extends BaseController
         $galeriModel = new \App\Models\GaleriModel();
         $pesanKontakModel = new \App\Models\PesanKontakModel();
         $faqModel = new \App\Models\FaqModel();
+        $statsModel = new \App\Models\StatsModel();
         
         // Statistik umum untuk user
         $jumlah_berita = $beritaModel->countAllResults();
@@ -147,6 +151,7 @@ class Dashboard extends BaseController
         $jumlah_galeri = $galeriModel->countAllResults();
         $jumlah_pesan = $pesanKontakModel->countAllResults();
         $jumlah_faq = $faqModel->countAllResults();
+        $jumlah_stats = $statsModel->countAllResults();
         
         // Statistik pesan kontak
         $pesan_statistics = $pesanKontakModel->getStatistics();
@@ -211,6 +216,7 @@ class Dashboard extends BaseController
             'jumlah_galeri' => $jumlah_galeri,
             'jumlah_pesan' => $jumlah_pesan,
             'jumlah_faq' => $jumlah_faq,
+            'jumlah_stats' => $jumlah_stats,
             'pesan_statistics' => $pesan_statistics,
             'grafik_berita_labels' => json_encode($labels_berita),
             'grafik_berita_data' => json_encode($data_berita),

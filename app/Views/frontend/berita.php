@@ -19,8 +19,8 @@
     </div>
 </section>
 
-<!-- News Section -->
-<section class="news-section py-5">
+<!-- Page Content Section -->
+<section class="page-content-section py-5">
     <div class="container">
         <!-- Search and Filter -->
         <div class="news-controls mb-5" data-aos="fade-up">
@@ -143,7 +143,7 @@
         <div class="row">
             <?php foreach ($kategoris as $index => $kat): ?>
             <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="<?= ($index + 1) * 100 ?>">
-                <div class="category-card">
+                <div class="related-page-card">
                     <div class="category-icon">
                         <i class="fas fa-folder"></i>
                     </div>

@@ -85,50 +85,70 @@
 <section class="stats-section py-5">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-number">150+</h3>
-                        <p class="stat-label">Dokter Spesialis</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-hospital"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-number">25+</h3>
-                        <p class="stat-label">Rumah Sakit</p>
+            <?php if (!empty($stats)): ?>
+                <?php foreach ($stats as $index => $stat): ?>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="<?= ($index + 1) * 100 ?>">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="<?= esc($stat['ikon']) ?>"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number"><?= esc($stat['angka']) ?></h3>
+                            <p class="stat-label"><?= esc($stat['judul']) ?></p>
+                            <?php if (!empty($stat['deskripsi'])): ?>
+                            <small class="stat-description"><?= esc($stat['deskripsi']) ?></small>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-number">50K+</h3>
-                        <p class="stat-label">Pasien Dilayani</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3 class="stat-number">30+</h3>
-                        <p class="stat-label">Tahun Pengalaman</p>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- Fallback stats jika tidak ada data dari database -->
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">150+</h3>
+                            <p class="stat-label">Dokter Spesialis</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">25+</h3>
+                            <p class="stat-label">Rumah Sakit</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">50K+</h3>
+                            <p class="stat-label">Pasien Dilayani</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">30+</h3>
+                            <p class="stat-label">Tahun Pengalaman</p>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -197,6 +217,250 @@
                     </a>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Checkerboard Carousel Section -->
+<section class="checkerboard-section py-5 bg-light">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <h6 class="text-primary fw-bold mb-2">LAYANAN KAMI</h6>
+            <h2 class="section-title">Fasilitas & Layanan Unggulan</h2>
+            <div class="title-line mx-auto"></div>
+            <p class="text-muted mt-3">Berbagai layanan kesehatan terbaik yang kami sediakan untuk Anda</p>
+        </div>
+        
+        <!-- Checkerboard Carousel -->
+        <div id="checkerboardCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <?php 
+                // Calculate number of slides based on data
+                $layananData = isset($layanan) ? $layanan : [];
+                $totalLayanan = count($layananData);
+                $itemsPerSlide = 4;
+                $totalSlides = $totalLayanan > 0 ? ceil($totalLayanan / $itemsPerSlide) : 3;
+                
+                for ($i = 0; $i < $totalSlides; $i++): 
+                ?>
+                <button type="button" data-bs-target="#checkerboardCarousel" data-bs-slide-to="<?= $i ?>" 
+                        class="<?= $i === 0 ? 'active' : '' ?>" aria-current="<?= $i === 0 ? 'true' : 'false' ?>" 
+                        aria-label="Slide <?= $i + 1 ?>"></button>
+                <?php endfor; ?>
+            </div>
+            
+            <div class="carousel-inner">
+                <?php if (!empty($layananData)): ?>
+                    <?php 
+                    // Group layanan into slides
+                    $layananChunks = array_chunk($layananData, $itemsPerSlide);
+                    foreach ($layananChunks as $slideIndex => $slideLayanan): 
+                    ?>
+                    <div class="carousel-item <?= $slideIndex === 0 ? 'active' : '' ?>">
+                        <div class="checkerboard-grid">
+                            <div class="row g-4">
+                                <?php foreach ($slideLayanan as $itemIndex => $layanan): ?>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="<?= ($itemIndex + 1) * 100 ?>">
+                                    <div class="checkerboard-item <?= ($itemIndex % 2 === 0) ? 'primary-item' : 'secondary-item' ?>">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="<?= $layanan['ikon'] ?? 'fas fa-stethoscope' ?>"></i>
+                                            </div>
+                                            <h4><?= htmlspecialchars($layanan['nama_layanan'] ?? 'Layanan') ?></h4>
+                                            <p><?= htmlspecialchars($layanan['deskripsi'] ?? 'Deskripsi layanan') ?></p>
+                                            <a href="<?= base_url('layanan/' . ($layanan['slug'] ?? '#')) ?>" class="btn btn-sm <?= ($itemIndex % 2 === 0) ? 'btn-outline-light' : 'btn-outline-primary' ?>">
+                                                Selengkapnya
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <!-- Fallback: Static Content -->
+                    <!-- Slide 1 -->
+                    <div class="carousel-item active">
+                        <div class="checkerboard-grid">
+                            <div class="row g-4">
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="checkerboard-item primary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-heartbeat"></i>
+                                            </div>
+                                            <h4>Poli Jantung</h4>
+                                            <p>Layanan spesialis jantung dengan teknologi modern dan dokter berpengalaman</p>
+                                            <a href="#" class="btn btn-sm btn-outline-light">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="checkerboard-item secondary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-brain"></i>
+                                            </div>
+                                            <h4>Poli Saraf</h4>
+                                            <p>Spesialisasi neurologi untuk diagnosis dan pengobatan gangguan saraf</p>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                                    <div class="checkerboard-item secondary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-bone"></i>
+                                            </div>
+                                            <h4>Poli Ortopedi</h4>
+                                            <p>Layanan spesialis tulang dan sendi dengan perawatan terbaik</p>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                                    <div class="checkerboard-item primary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-eye"></i>
+                                            </div>
+                                            <h4>Poli Mata</h4>
+                                            <p>Spesialis mata dengan peralatan canggih untuk kesehatan penglihatan</p>
+                                            <a href="#" class="btn btn-sm btn-outline-light">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="carousel-item">
+                        <div class="checkerboard-grid">
+                            <div class="row g-4">
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="checkerboard-item secondary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-baby"></i>
+                                            </div>
+                                            <h4>Poli Anak</h4>
+                                            <p>Layanan kesehatan khusus anak dengan pendekatan yang ramah</p>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="checkerboard-item primary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-female"></i>
+                                            </div>
+                                            <h4>Poli Kebidanan</h4>
+                                            <p>Layanan kesehatan ibu hamil dan persalinan yang aman</p>
+                                            <a href="#" class="btn btn-sm btn-outline-light">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                                    <div class="checkerboard-item primary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-tooth"></i>
+                                            </div>
+                                            <h4>Poli Gigi</h4>
+                                            <p>Layanan kesehatan gigi dan mulut dengan teknologi modern</p>
+                                            <a href="#" class="btn btn-sm btn-outline-light">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                                    <div class="checkerboard-item secondary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-microscope"></i>
+                                            </div>
+                                            <h4>Laboratorium</h4>
+                                            <p>Fasilitas laboratorium modern untuk pemeriksaan kesehatan</p>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="carousel-item">
+                        <div class="checkerboard-grid">
+                            <div class="row g-4">
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="checkerboard-item primary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-x-ray"></i>
+                                            </div>
+                                            <h4>Radiologi</h4>
+                                            <p>Pemeriksaan radiologi dengan peralatan canggih dan akurat</p>
+                                            <a href="#" class="btn btn-sm btn-outline-light">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="checkerboard-item secondary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-ambulance"></i>
+                                            </div>
+                                            <h4>IGD 24 Jam</h4>
+                                            <p>Layanan gawat darurat 24 jam dengan tim medis siap siaga</p>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                                    <div class="checkerboard-item secondary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-pills"></i>
+                                            </div>
+                                            <h4>Apotek</h4>
+                                            <p>Fasilitas apotek dengan obat-obatan lengkap dan berkualitas</p>
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                                    <div class="checkerboard-item primary-item">
+                                        <div class="item-content">
+                                            <div class="item-icon">
+                                                <i class="fas fa-hospital-user"></i>
+                                            </div>
+                                            <h4>Rawat Inap</h4>
+                                            <p>Fasilitas rawat inap nyaman dengan perawatan intensif</p>
+                                            <a href="#" class="btn btn-sm btn-outline-light">Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+            
+            <?php if ($totalSlides > 1): ?>
+            <button class="carousel-control-prev" type="button" data-bs-target="#checkerboardCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#checkerboardCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -335,13 +599,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Home page loaded');
     
-    // Check if carousel exists
-    const carousel = document.getElementById('heroCarousel');
-    if (carousel) {
-        console.log('Carousel found, initializing...');
+    // Check if hero carousel exists
+    const heroCarousel = document.getElementById('heroCarousel');
+    if (heroCarousel) {
+        console.log('Hero carousel found, initializing...');
         
         // Initialize Bootstrap carousel
-        const bsCarousel = new bootstrap.Carousel(carousel, {
+        const bsHeroCarousel = new bootstrap.Carousel(heroCarousel, {
             interval: 5000, // 5 seconds
             wrap: true,
             keyboard: true,
@@ -349,17 +613,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Add event listeners
-        carousel.addEventListener('slide.bs.carousel', function (event) {
-            console.log('Slide changing to:', event.to);
+        heroCarousel.addEventListener('slide.bs.carousel', function (event) {
+            console.log('Hero slide changing to:', event.to);
         });
         
-        carousel.addEventListener('slid.bs.carousel', function (event) {
-            console.log('Slide changed to:', event.to);
+        heroCarousel.addEventListener('slid.bs.carousel', function (event) {
+            console.log('Hero slide changed to:', event.to);
         });
         
-        console.log('Carousel initialized successfully');
+        console.log('Hero carousel initialized successfully');
     } else {
-        console.log('No carousel found, showing default hero');
+        console.log('No hero carousel found, showing default hero');
+    }
+    
+    // Checkerboard Carousel Initialization
+    const checkerboardCarousel = document.getElementById('checkerboardCarousel');
+    if (checkerboardCarousel) {
+        console.log('Checkerboard carousel found, initializing...');
+        
+        // Initialize Bootstrap carousel for checkerboard
+        const bsCheckerboardCarousel = new bootstrap.Carousel(checkerboardCarousel, {
+            interval: 6000, // 6 seconds
+            wrap: true,
+            keyboard: true,
+            pause: 'hover'
+        });
+        
+        // Add event listeners for checkerboard carousel
+        checkerboardCarousel.addEventListener('slide.bs.carousel', function (event) {
+            console.log('Checkerboard slide changing to:', event.to);
+        });
+        
+        checkerboardCarousel.addEventListener('slid.bs.carousel', function (event) {
+            console.log('Checkerboard slide changed to:', event.to);
+        });
+        
+        console.log('Checkerboard carousel initialized successfully');
+    } else {
+        console.log('No checkerboard carousel found');
     }
     
     // Debug: Log slides data

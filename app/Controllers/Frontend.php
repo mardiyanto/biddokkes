@@ -8,47 +8,33 @@ class Frontend extends BaseController
     {
         try {
             $slideModel = new \App\Models\SlideModel();
-            $halamanModel = new \App\Models\HalamanModel();
-            $galeriModel = new \App\Models\GaleriModel();
             $beritaModel = new \App\Models\BeritaModel();
+            $galeriModel = new \App\Models\GaleriModel();
             $profilModel = new \App\Models\ProfilModel();
+            $statsModel = new \App\Models\StatsModel();
             
-            // Ambil slide aktif saja
-            $slides = $slideModel->getActiveSlides() ?: [];
-            
-            // Debug: Log slides data
-            log_message('info', 'Active slides data: ' . json_encode($slides));
-            
-            // Ambil halaman profil
-            $profil = $halamanModel->getHalamanBySlug('profil');
-            
-            // Ambil data profil website
+            $slides = $slideModel->getActiveSlides();
+            $berita_terbaru = $beritaModel->getLatest(3);
+            $galeri = $galeriModel->getLatest(6);
             $profilWebsite = $profilModel->getProfil();
-            
-            // Ambil galeri terbaru (6 item)
-            $galeri = $galeriModel->getLatest(6) ?: [];
-            
-            // Ambil berita terbaru (3 item)
-            $berita_terbaru = $beritaModel->getLatest(3) ?: [];
+            $stats = $statsModel->getActiveStats(4); // Ambil 4 stats aktif untuk frontend
             
             return view('frontend/home', [
                 'slides' => $slides,
-                'profil' => $profil,
-                'profilWebsite' => $profilWebsite,
+                'berita_terbaru' => $berita_terbaru,
                 'galeri' => $galeri,
-                'berita_terbaru' => $berita_terbaru
+                'profilWebsite' => $profilWebsite,
+                'stats' => $stats
             ]);
         } catch (\Exception $e) {
-            // Log error
-            log_message('error', 'Frontend index error: ' . $e->getMessage());
+            log_message('error', 'Frontend home error: ' . $e->getMessage());
             
-            // Return view with empty data
             return view('frontend/home', [
                 'slides' => [],
-                'profil' => null,
-                'profilWebsite' => null,
+                'berita_terbaru' => [],
                 'galeri' => [],
-                'berita_terbaru' => []
+                'profilWebsite' => null,
+                'stats' => []
             ]);
         }
     }
@@ -149,15 +135,77 @@ class Frontend extends BaseController
         }
     }
     
+    public function beritaDetailById($id)
+    {
+        try {
+            $beritaModel = new \App\Models\BeritaModel();
+            $profilModel = new \App\Models\ProfilModel();
+            
+            // Validasi ID
+            $id = intval($id);
+            if ($id <= 0) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('ID berita tidak valid');
+            }
+            
+            $berita = $beritaModel->getBeritaById($id);
+            
+            if (!$berita) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('Berita tidak ditemukan');
+            }
+            
+            // Increment view count
+            $beritaModel->incrementViewCount($id);
+            
+            // Ambil berita terkait
+            $berita_terkait = $beritaModel->getRelatedBerita($berita['id_berita'], $berita['id_kategori'], 3) ?: [];
+            $profilWebsite = $profilModel->getProfil();
+            
+            return view('frontend/berita_detail', [
+                'berita' => $berita,
+                'berita_terkait' => $berita_terkait,
+                'profilWebsite' => $profilWebsite
+            ]);
+        } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            log_message('error', 'Frontend berita detail by ID error: ' . $e->getMessage());
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Berita tidak ditemukan');
+        }
+    }
+    
     public function halaman($slug)
     {
         try {
             $halamanModel = new \App\Models\HalamanModel();
             $profilModel = new \App\Models\ProfilModel();
             
+            // Validasi slug
+            if (empty($slug)) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('Slug halaman tidak valid');
+            }
+            
             $halaman = $halamanModel->getHalamanBySlug($slug);
             
             if (!$halaman) {
+                // Coba cari halaman dengan slug yang berbeda
+                $allHalaman = $halamanModel->getActiveHalaman();
+                $suggestions = [];
+                
+                foreach ($allHalaman as $h) {
+                    if (similar_text($slug, $h['slug']) > strlen($slug) * 0.6) {
+                        $suggestions[] = $h;
+                    }
+                }
+                
+                // Jika ada saran, tampilkan halaman 404 dengan saran
+                if (!empty($suggestions)) {
+                    return view('frontend/404', [
+                        'message' => 'Halaman tidak ditemukan',
+                        'suggestions' => $suggestions,
+                        'profilWebsite' => $profilModel->getProfil()
+                    ]);
+                }
+                
                 throw new \CodeIgniter\Exceptions\PageNotFoundException('Halaman tidak ditemukan');
             }
             
@@ -168,10 +216,22 @@ class Frontend extends BaseController
                 'profilWebsite' => $profilWebsite
             ]);
         } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
-            throw $e;
+            // Log error untuk debugging
+            log_message('error', 'Frontend halaman 404: ' . $e->getMessage() . ' - Slug: ' . ($slug ?? 'null'));
+            
+            // Tampilkan halaman 404 yang lebih informatif
+            return view('frontend/404', [
+                'message' => 'Halaman tidak ditemukan',
+                'slug' => $slug,
+                'profilWebsite' => $profilModel->getProfil() ?? null
+            ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend halaman error: ' . $e->getMessage());
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Halaman tidak ditemukan');
+            
+            return view('frontend/404', [
+                'message' => 'Terjadi kesalahan saat memuat halaman',
+                'profilWebsite' => $profilModel->getProfil() ?? null
+            ]);
         }
     }
     
@@ -260,16 +320,254 @@ class Frontend extends BaseController
                 'download_count' => ($download['download_count'] ?? 0) + 1
             ]);
             
+            // Cek tipe file
+            $extension = strtolower(pathinfo($download['nama_file'] ?? $download['file'], PATHINFO_EXTENSION));
+            
+            // Jika PDF, redirect ke preview
+            if ($extension === 'pdf') {
+                return redirect()->to('/frontdownload/preview/' . $id);
+            }
+            
+            // Untuk file non-PDF, download langsung
             // Generate safe filename
             $safe_filename = preg_replace('/[^a-zA-Z0-9._-]/', '_', $download['judul']);
             $extension = pathinfo($download['nama_file'] ?? $download['file'], PATHINFO_EXTENSION);
             $download_filename = $safe_filename . '.' . $extension;
-            
-            return $this->response->download($file_path, $download_filename);
+
+            // Set content type berdasarkan ekstensi
+            $content_type = 'application/octet-stream';
+            switch (strtolower($extension)) {
+                case 'pdf':
+                    $content_type = 'application/pdf';
+                    break;
+                case 'doc':
+                    $content_type = 'application/msword';
+                    break;
+                case 'docx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                    break;
+                case 'xls':
+                    $content_type = 'application/vnd.ms-excel';
+                    break;
+                case 'xlsx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                    break;
+                case 'ppt':
+                    $content_type = 'application/vnd.ms-powerpoint';
+                    break;
+                case 'pptx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+                    break;
+                case 'zip':
+                    $content_type = 'application/zip';
+                    break;
+                case 'rar':
+                    $content_type = 'application/x-rar-compressed';
+                    break;
+                case 'jpg':
+                case 'jpeg':
+                    $content_type = 'image/jpeg';
+                    break;
+                case 'png':
+                    $content_type = 'image/png';
+                    break;
+                case 'gif':
+                    $content_type = 'image/gif';
+                    break;
+            }
+
+            // Clear output buffers
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            // Set response headers
+            $this->response->setContentType($content_type);
+            $this->response->setHeader('Content-Disposition', 'attachment; filename="' . $download_filename . '"');
+            $this->response->setHeader('Content-Length', (string)filesize($file_path));
+            $this->response->setHeader('Cache-Control', 'no-cache, must-revalidate');
+            $this->response->setHeader('Pragma', 'no-cache');
+            $this->response->setHeader('Expires', '0');
+
+            // Read and output file content
+            $file_content = file_get_contents($file_path);
+            if ($file_content === false) {
+                throw new \Exception('Tidak bisa membaca file');
+            }
+
+            $this->response->setBody($file_content);
+            return $this->response;
         } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
             throw $e;
         } catch (\Exception $e) {
             log_message('error', 'Frontend download file error: ' . $e->getMessage());
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('File tidak dapat diunduh');
+        }
+    }
+    
+    public function previewPdf($id)
+    {
+        try {
+            $downloadModel = new \App\Models\DownloadModel();
+            
+            // Validasi ID
+            $id = intval($id);
+            if ($id <= 0) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('ID file tidak valid');
+            }
+            
+            $download = $downloadModel->find($id);
+            
+            if (!$download) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('File tidak ditemukan');
+            }
+            
+            // Cek apakah file PDF
+            $extension = strtolower(pathinfo($download['nama_file'] ?? $download['file'], PATHINFO_EXTENSION));
+            if ($extension !== 'pdf') {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('File bukan PDF');
+            }
+            
+            $file_path = FCPATH . 'uploads/download/' . ($download['nama_file'] ?? $download['file']);
+            
+            if (!file_exists($file_path)) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('File tidak ditemukan di server');
+            }
+            
+            // Update hit counter
+            $downloadModel->update($id, [
+                'hits' => ($download['hits'] ?? 0) + 1,
+                'download_count' => ($download['download_count'] ?? 0) + 1
+            ]);
+            
+            // Clear output buffers
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+            
+            // Set response untuk preview PDF di browser
+            $this->response->setContentType('application/pdf');
+            $this->response->setHeader('Content-Disposition', 'inline; filename="' . ($download['nama_file'] ?? $download['file']) . '"');
+            $this->response->setHeader('Content-Length', (string)filesize($file_path));
+            $this->response->setHeader('Cache-Control', 'no-cache, must-revalidate');
+            $this->response->setHeader('Pragma', 'no-cache');
+            $this->response->setHeader('Expires', '0');
+            // Read and output file content
+            $file_content = file_get_contents($file_path);
+            if ($file_content === false) {
+                throw new \Exception('Tidak bisa membaca file');
+            }
+            
+            $this->response->setBody($file_content);
+            return $this->response;
+        } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            log_message('error', 'Frontend preview PDF error: ' . $e->getMessage());
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('File tidak dapat ditampilkan');
+        }
+    }
+    
+    public function forceDownload($id)
+    {
+        try {
+            $downloadModel = new \App\Models\DownloadModel();
+            
+            // Validasi ID
+            $id = intval($id);
+            if ($id <= 0) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('ID file tidak valid');
+            }
+            
+            $download = $downloadModel->find($id);
+            
+            if (!$download) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('File tidak ditemukan');
+            }
+            
+            $file_path = FCPATH . 'uploads/download/' . ($download['nama_file'] ?? $download['file']);
+            
+            if (!file_exists($file_path)) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('File tidak ditemukan di server');
+            }
+            
+            // Update hit counter
+            $downloadModel->update($id, [
+                'hits' => ($download['hits'] ?? 0) + 1,
+                'download_count' => ($download['download_count'] ?? 0) + 1
+            ]);
+            
+            // Generate safe filename untuk download
+            $safe_filename = preg_replace('/[^a-zA-Z0-9._-]/', '_', $download['judul']);
+            $extension = pathinfo($download['nama_file'] ?? $download['file'], PATHINFO_EXTENSION);
+            $download_filename = $safe_filename . '.' . $extension;
+            
+            // Set content type berdasarkan ekstensi
+            $content_type = 'application/octet-stream';
+            switch (strtolower($extension)) {
+                case 'pdf':
+                    $content_type = 'application/pdf';
+                    break;
+                case 'doc':
+                    $content_type = 'application/msword';
+                    break;
+                case 'docx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                    break;
+                case 'xls':
+                    $content_type = 'application/vnd.ms-excel';
+                    break;
+                case 'xlsx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                    break;
+                case 'ppt':
+                    $content_type = 'application/vnd.ms-powerpoint';
+                    break;
+                case 'pptx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+                    break;
+                case 'zip':
+                    $content_type = 'application/zip';
+                    break;
+                case 'rar':
+                    $content_type = 'application/x-rar-compressed';
+                    break;
+                case 'jpg':
+                case 'jpeg':
+                    $content_type = 'image/jpeg';
+                    break;
+                case 'png':
+                    $content_type = 'image/png';
+                    break;
+                case 'gif':
+                    $content_type = 'image/gif';
+                    break;
+            }
+            
+            // Clear output buffers
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+            
+            // Set response headers
+            $this->response->setContentType($content_type);
+            $this->response->setHeader('Content-Disposition', 'attachment; filename="' . $download_filename . '"');
+            $this->response->setHeader('Content-Length', (string)filesize($file_path));
+            $this->response->setHeader('Cache-Control', 'no-cache, must-revalidate');
+            $this->response->setHeader('Pragma', 'no-cache');
+            $this->response->setHeader('Expires', '0');
+            // Read and output file content
+            $file_content = file_get_contents($file_path);
+            if ($file_content === false) {
+                throw new \Exception('Tidak bisa membaca file');
+            }
+            
+            $this->response->setBody($file_content);
+            return $this->response;
+        } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            log_message('error', 'Frontend force download error: ' . $e->getMessage());
             throw new \CodeIgniter\Exceptions\PageNotFoundException('File tidak dapat diunduh');
         }
     }

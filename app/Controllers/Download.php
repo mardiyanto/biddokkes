@@ -288,24 +288,95 @@ class Download extends BaseController
 
     public function download($id = null)
     {
-        if ($id === null) {
-            return redirect()->back()->with('error', 'ID download tidak ditemukan');
+        try {
+            if ($id === null) {
+                return redirect()->back()->with('error', 'ID download tidak ditemukan');
+            }
+
+            $download = $this->downloadModel->find($id);
+            if (!$download) {
+                return redirect()->back()->with('error', 'File download tidak ditemukan');
+            }
+
+            $filePath = FCPATH . 'uploads/download/' . $download['nama_file'];
+            if (!file_exists($filePath)) {
+                return redirect()->back()->with('error', 'File tidak ditemukan');
+            }
+
+            // Update hit counter
+            $this->downloadModel->update($id, ['hits' => $download['hits'] + 1]);
+
+            // Generate safe filename
+            $safe_filename = preg_replace('/[^a-zA-Z0-9._-]/', '_', $download['judul']);
+            $extension = pathinfo($download['nama_file'], PATHINFO_EXTENSION);
+            $download_filename = $safe_filename . '.' . $extension;
+
+            // Set content type berdasarkan ekstensi
+            $content_type = 'application/octet-stream';
+            switch (strtolower($extension)) {
+                case 'pdf':
+                    $content_type = 'application/pdf';
+                    break;
+                case 'doc':
+                    $content_type = 'application/msword';
+                    break;
+                case 'docx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                    break;
+                case 'xls':
+                    $content_type = 'application/vnd.ms-excel';
+                    break;
+                case 'xlsx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                    break;
+                case 'ppt':
+                    $content_type = 'application/vnd.ms-powerpoint';
+                    break;
+                case 'pptx':
+                    $content_type = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+                    break;
+                case 'zip':
+                    $content_type = 'application/zip';
+                    break;
+                case 'rar':
+                    $content_type = 'application/x-rar-compressed';
+                    break;
+                case 'jpg':
+                case 'jpeg':
+                    $content_type = 'image/jpeg';
+                    break;
+                case 'png':
+                    $content_type = 'image/png';
+                    break;
+                case 'gif':
+                    $content_type = 'image/gif';
+                    break;
+            }
+
+            // Clear output buffers
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            // Set response headers
+            $this->response->setContentType($content_type);
+            $this->response->setHeader('Content-Disposition', 'attachment; filename="' . $download_filename . '"');
+            $this->response->setHeader('Content-Length', (string)filesize($filePath));
+            $this->response->setHeader('Cache-Control', 'no-cache, must-revalidate');
+            $this->response->setHeader('Pragma', 'no-cache');
+            $this->response->setHeader('Expires', '0');
+
+            // Read and output file content
+            $file_content = file_get_contents($filePath);
+            if ($file_content === false) {
+                throw new \Exception('Tidak bisa membaca file');
+            }
+
+            $this->response->setBody($file_content);
+            return $this->response;
+        } catch (\Exception $e) {
+            log_message('error', 'Download backend error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'File tidak dapat diunduh');
         }
-
-        $download = $this->downloadModel->find($id);
-        if (!$download) {
-            return redirect()->back()->with('error', 'File download tidak ditemukan');
-        }
-
-        $filePath = FCPATH . 'uploads/download/' . $download['nama_file'];
-        if (!file_exists($filePath)) {
-            return redirect()->back()->with('error', 'File tidak ditemukan');
-        }
-
-        // Update hit counter
-        $this->downloadModel->update($id, ['hits' => $download['hits'] + 1]);
-
-        // Download file
-        return $this->response->download($filePath, $download['nama_file']);
     }
 } 

@@ -137,11 +137,23 @@
                         
                         <div class="download-actions">
                             <?php if (!empty($fileName) && !empty($item['id_download'])): ?>
-                            <a href="<?= base_url('frontdownload/file/' . intval($item['id_download'])) ?>" 
-                               class="btn btn-primary btn-sm download-btn"
-                               onclick="trackDownload(<?= intval($item['id_download']) ?>, '<?= htmlspecialchars($item['judul'] ?? 'File') ?>')">
-                                <i class="fas fa-download me-1"></i>Download
-                            </a>
+                            <?php if (strtolower($extension) === 'pdf'): ?>
+                                <a href="<?= base_url('frontdownload/preview/' . intval($item['id_download'])) ?>" 
+                                   class="btn btn-warning btn-sm me-1" target="_blank">
+                                    <i class="fas fa-eye me-1"></i>Preview
+                                </a>
+                                <a href="<?= base_url('frontdownload/force/' . intval($item['id_download'])) ?>" 
+                                   class="btn btn-primary btn-sm download-btn"
+                                   onclick="trackDownload(<?= intval($item['id_download']) ?>, '<?= htmlspecialchars($item['judul'] ?? 'File') ?>')">
+                                    <i class="fas fa-download me-1"></i>Download
+                                </a>
+                            <?php else: ?>
+                                <a href="<?= base_url('frontdownload/file/' . intval($item['id_download'])) ?>" 
+                                   class="btn btn-primary btn-sm download-btn"
+                                   onclick="trackDownload(<?= intval($item['id_download']) ?>, '<?= htmlspecialchars($item['judul'] ?? 'File') ?>')">
+                                    <i class="fas fa-download me-1"></i>Download
+                                </a>
+                            <?php endif; ?>
                             <?php else: ?>
                             <button class="btn btn-secondary btn-sm" disabled>
                                 <i class="fas fa-exclamation-triangle me-1"></i>File Tidak Tersedia

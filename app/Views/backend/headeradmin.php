@@ -143,6 +143,11 @@
                     <i class="fas fa-images text-blue"></i> Slide
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('checkerboard-carousel') ?>">
+                    <i class="fas fa-th-large text-green"></i> Checkerboard Carousel
+                  </a>
+                </li>
               </ul>
             </div>
           </li>
@@ -187,6 +192,13 @@
           <li class="nav-item <?= (current_url() == base_url('faq')) ? 'active' : '' ?>">
             <a class="nav-link <?= (current_url() == base_url('faq')) ? 'active' : '' ?>" href="<?= base_url('faq') ?>">
               <i class="ni ni-chat-round text-info"></i> FAQ
+            </a>
+          </li>
+          
+          <!-- Quick Stats -->
+          <li class="nav-item <?= (current_url() == base_url('stats')) ? 'active' : '' ?>">
+            <a class="nav-link <?= (current_url() == base_url('stats')) ? 'active' : '' ?>" href="<?= base_url('stats') ?>">
+              <i class="ni ni-chart-bar-32 text-success"></i> Quick Stats
             </a>
           </li>
           

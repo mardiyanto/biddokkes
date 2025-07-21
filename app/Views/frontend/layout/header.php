@@ -105,6 +105,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link <?= strpos(current_url(), 'fronthalaman') !== false ? 'active' : '' ?>" href="<?= base_url('fronthalaman/profil') ?>">
+                            <i class="fas fa-info-circle me-1"></i>Tentang Kami
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link <?= strpos(current_url(), 'frontberita') !== false ? 'active' : '' ?>" href="<?= base_url('frontberita') ?>">
                             <i class="fas fa-newspaper me-1"></i>Berita
                         </a>
@@ -119,11 +124,7 @@
                             <i class="fas fa-download me-1"></i>Download
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= strpos(current_url(), 'fronthalaman') !== false ? 'active' : '' ?>" href="<?= base_url('fronthalaman/profil') ?>">
-                            <i class="fas fa-info-circle me-1"></i>Tentang
-                        </a>
-                    </li>
+                
                     <li class="nav-item">
                         <a class="nav-link <?= strpos(current_url(), 'frontcontact') !== false ? 'active' : '' ?>" href="<?= base_url('frontcontact') ?>">
                             <i class="fas fa-phone me-1"></i>Kontak

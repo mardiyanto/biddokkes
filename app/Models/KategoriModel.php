@@ -18,4 +18,10 @@ class KategoriModel extends Model
                     ->groupBy('kategori.id_kategori')
                     ->findAll();
     }
+    
+    public function getBeritaCountByKategori($id_kategori)
+    {
+        $beritaModel = new \App\Models\BeritaModel();
+        return $beritaModel->where('id_kategori', $id_kategori)->countAllResults();
+    }
 } 

@@ -40,7 +40,8 @@ class Berita extends BaseController
 
         $data = [
             'title' => 'Tambah Berita',
-            'kategori' => $this->kategoriModel->findAll()
+            'kategori' => $this->kategoriModel->findAll(),
+            'penulis' => session()->get('nama') // Ambil nama dari session
         ];
 
         return view('backend/berita/create', $data);
@@ -58,6 +59,9 @@ class Berita extends BaseController
         $isi = $this->request->getPost('isi');
         $penulis = $this->request->getPost('penulis');
         $tanggal_terbit = $this->request->getPost('tanggal_terbit');
+        
+        // Generate slug dari judul
+        $slug = $this->generateSlug($judul);
         
         // Upload gambar
         $gambar = '';
@@ -77,6 +81,7 @@ class Berita extends BaseController
         $data = [
             'id_kategori' => $id_kategori,
             'judul' => $judul,
+            'slug' => $slug,
             'isi' => $isi,
             'gambar' => $gambar,
             'penulis' => $penulis,
@@ -107,7 +112,8 @@ class Berita extends BaseController
         $data = [
             'title' => 'Edit Berita',
             'berita' => $berita,
-            'kategori' => $this->kategoriModel->findAll()
+            'kategori' => $this->kategoriModel->findAll(),
+            'penulis' => session()->get('nama') // Ambil nama dari session
         ];
 
         return view('backend/berita/edit', $data);
@@ -131,9 +137,16 @@ class Berita extends BaseController
         $penulis = $this->request->getPost('penulis');
         $tanggal_terbit = $this->request->getPost('tanggal_terbit');
         
+        // Generate slug dari judul jika berubah
+        $slug = $berita['slug'];
+        if ($judul != $berita['judul']) {
+            $slug = $this->generateSlug($judul);
+        }
+        
         $data = [
             'id_kategori' => $id_kategori,
             'judul' => $judul,
+            'slug' => $slug,
             'isi' => $isi,
             'penulis' => $penulis,
             'tanggal_terbit' => $tanggal_terbit
@@ -190,5 +203,47 @@ class Berita extends BaseController
         }
 
         return redirect()->to('/berita');
+    }
+
+    /**
+     * Generate slug dari judul berita
+     */
+    private function generateSlug($judul)
+    {
+        // Convert ke lowercase
+        $slug = strtolower($judul);
+        
+        // Replace karakter khusus dengan dash
+        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
+        
+        // Replace spasi dengan dash
+        $slug = preg_replace('/[\s-]+/', '-', $slug);
+        
+        // Remove dash di awal dan akhir
+        $slug = trim($slug, '-');
+        
+        // Jika slug kosong, gunakan 'berita'
+        if (empty($slug)) {
+            $slug = 'berita';
+        }
+        
+        // Cek apakah slug sudah ada, jika ya tambahkan timestamp
+        $existingSlug = $this->beritaModel->where('slug', $slug)->first();
+        if ($existingSlug) {
+            $slug = $slug . '-' . time();
+        }
+        
+        return $slug;
+    }
+
+    /**
+     * API untuk generate slug (untuk AJAX)
+     */
+    public function generateSlugAjax()
+    {
+        $judul = $this->request->getPost('judul');
+        $slug = $this->generateSlug($judul);
+        
+        return $this->response->setJSON(['slug' => $slug]);
     }
 } 

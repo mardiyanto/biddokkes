@@ -1,16 +1,17 @@
 <?= $this->include('frontend/layout/header') ?>
 
+<?php if (!empty($halaman)): ?>
 <!-- Page Header -->
 <section class="page-header">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="page-header-content text-center">
-                    <h1 class="page-title"><?= $halaman['judul'] ?></h1>
+                    <h1 class="page-title"><?= esc($halaman['judul']) ?></h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a href="<?= base_url() ?>">Beranda</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><?= $halaman['judul'] ?></li>
+                            <li class="breadcrumb-item active" aria-current="page"><?= esc($halaman['judul']) ?></li>
                         </ol>
                     </nav>
                 </div>
@@ -28,10 +29,10 @@
                 <article class="page-content" data-aos="fade-up">
                     <!-- Page Header -->
                     <div class="page-header-content mb-4">
-                        <?php if ($halaman['gambar']): ?>
+                        <?php if (!empty($halaman['gambar'])): ?>
                         <div class="page-image-wrapper mb-4">
                             <img src="<?= base_url('uploads/halaman/' . $halaman['gambar']) ?>" 
-                                 alt="<?= $halaman['judul'] ?>" 
+                                 alt="<?= esc($halaman['judul']) ?>" 
                                  class="img-fluid rounded">
                         </div>
                         <?php endif; ?>
@@ -39,7 +40,7 @@
                         <div class="page-meta">
                             <div class="meta-item">
                                 <i class="fas fa-user me-2"></i>
-                                <span>Penulis: <?= $halaman['penulis'] ?? 'Admin' ?></span>
+                                <span>Penulis: <?= esc($halaman['penulis'] ?? 'Admin') ?></span>
                             </div>
                             <div class="meta-item">
                                 <i class="fas fa-calendar me-2"></i>
@@ -108,16 +109,16 @@
                     ?>
                     <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="<?= ($count + 1) * 100 ?>">
                         <div class="related-page-card">
-                            <?php if ($related['gambar']): ?>
+                            <?php if (!empty($related['gambar'])): ?>
                             <div class="related-page-image">
                                 <img src="<?= base_url('uploads/halaman/' . $related['gambar']) ?>" 
-                                     alt="<?= $related['judul'] ?>" 
+                                     alt="<?= esc($related['judul']) ?>" 
                                      class="img-fluid">
                             </div>
                             <?php endif; ?>
                             <div class="related-page-content">
                                 <h5 class="related-page-title">
-                                    <a href="<?= base_url('fronthalaman/' . $related['slug']) ?>"><?= $related['judul'] ?></a>
+                                    <a href="<?= base_url('fronthalaman/' . $related['slug']) ?>"><?= esc($related['judul']) ?></a>
                                 </h5>
                                 <p class="related-page-excerpt">
                                     <?= substr(strip_tags($related['konten']), 0, 100) ?>...
@@ -155,6 +156,39 @@
         </div>
     </div>
 </section>
+
+<?php else: ?>
+<!-- Error Section -->
+<section class="error-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="error-content" data-aos="fade-up">
+                    <div class="error-icon mb-4">
+                        <i class="fas fa-exclamation-triangle fa-5x text-warning"></i>
+                    </div>
+                    
+                    <h1 class="error-title mb-3">404</h1>
+                    <h2 class="error-subtitle mb-4">Halaman Tidak Ditemukan</h2>
+                    
+                    <p class="error-message mb-4">
+                        Maaf, halaman yang Anda cari tidak ditemukan atau belum tersedia.
+                    </p>
+                    
+                    <div class="error-actions mb-5">
+                        <a href="<?= base_url() ?>" class="btn btn-primary me-3">
+                            <i class="fas fa-home me-2"></i>Kembali ke Beranda
+                        </a>
+                        <a href="<?= base_url('frontcontact') ?>" class="btn btn-outline-primary">
+                            <i class="fas fa-phone me-2"></i>Hubungi Kami
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 
 <script>
     // Share button functionality

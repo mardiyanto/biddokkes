@@ -33,6 +33,7 @@ $routes->post('berita/store', 'Berita::store');
 $routes->get('berita/edit/(:num)', 'Berita::edit/$1');
 $routes->post('berita/update/(:num)', 'Berita::update/$1');
 $routes->get('berita/delete/(:num)', 'Berita::delete/$1');
+$routes->post('berita/generate-slug', 'Berita::generateSlugAjax');
 
 // Admin routes (kategori download)
 $routes->get('kategori-download', 'KategoriDownload::index');
@@ -98,16 +99,17 @@ $routes->post('profil/update', 'Profil::update');
 // Frontend routes (dengan prefix 'front' untuk menghindari konflik)
 $routes->get('frontberita', 'Frontend::berita');
 $routes->get('frontberita/(:segment)', 'Frontend::beritaDetail/$1');
+$routes->get('frontberita/detail/(:num)', 'Frontend::beritaDetailById/$1');
 $routes->get('frontgaleri', 'Frontend::galeri');
 $routes->get('fronthalaman/(:segment)', 'Frontend::halaman/$1');
 $routes->get('frontdownload', 'Frontend::download');
 $routes->get('frontdownload/file/(:num)', 'Frontend::downloadFile/$1');
+$routes->get('frontdownload/preview/(:num)', 'Frontend::previewPdf/$1');
+$routes->get('frontdownload/force/(:num)', 'Frontend::forceDownload/$1');
 $routes->get('frontcontact', 'Frontend::contact');
 $routes->get('frontsearch', 'Frontend::search');
 
-// Frontend routes (halaman statis) - legacy
-$routes->get('fronthalaman/(:segment)', 'Halaman::show/$1');
-// Frontend routes (galeri) - legacy
+
 $routes->get('frontgaleri', 'Galeri::frontend');
 
 // Pesan Kontak Routes
@@ -136,5 +138,28 @@ $routes->post('faq/bulk-action', 'Faq::bulkAction');
 $routes->post('faq/reorder', 'Faq::reorder');
 $routes->get('faq/export', 'Faq::export');
 $routes->get('faq/next-urutan', 'Faq::getNextUrutan');
+
+// Stats Routes
+$routes->get('stats', 'Stats::index');
+$routes->get('stats/create', 'Stats::create');
+$routes->post('stats/create', 'Stats::create');
+$routes->get('stats/edit/(:num)', 'Stats::edit/$1');
+$routes->post('stats/edit/(:num)', 'Stats::edit/$1');
+$routes->get('stats/delete/(:num)', 'Stats::delete/$1');
+$routes->get('stats/toggle-status/(:num)', 'Stats::toggleStatus/$1');
+$routes->post('stats/bulk-action', 'Stats::bulkAction');
+$routes->post('stats/reorder', 'Stats::reorder');
+$routes->get('stats/export', 'Stats::export');
+$routes->get('stats/next-urutan', 'Stats::getNextUrutan');
+
+// Checkerboard Carousel Routes
+$routes->get('checkerboard-carousel', 'CheckerboardCarousel::index');
+$routes->get('checkerboard-carousel/create', 'CheckerboardCarousel::create');
+$routes->post('checkerboard-carousel/store', 'CheckerboardCarousel::store');
+$routes->get('checkerboard-carousel/edit/(:num)', 'CheckerboardCarousel::edit/$1');
+$routes->post('checkerboard-carousel/update/(:num)', 'CheckerboardCarousel::update/$1');
+$routes->get('checkerboard-carousel/delete/(:num)', 'CheckerboardCarousel::delete/$1');
+$routes->get('checkerboard-carousel/toggle-status/(:num)', 'CheckerboardCarousel::toggleStatus/$1');
+$routes->post('checkerboard-carousel/reorder', 'CheckerboardCarousel::reorder');
 
 

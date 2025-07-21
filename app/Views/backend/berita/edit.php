@@ -26,7 +26,12 @@
               <?= csrf_field() ?>
               <div class="form-group">
                 <label>Judul Berita <span class="text-danger">*</span></label>
-                <input type="text" name="judul" class="form-control" value="<?= old('judul', $berita['judul']) ?>" required maxlength="200" placeholder="Masukkan judul berita">
+                <input type="text" name="judul" id="judul" class="form-control" value="<?= old('judul', $berita['judul']) ?>" required maxlength="200" placeholder="Masukkan judul berita">
+              </div>
+              <div class="form-group">
+                <label>Slug <span class="text-danger">*</span></label>
+                <input type="text" name="slug" id="slug" class="form-control" value="<?= old('slug', $berita['slug']) ?>" required maxlength="255" placeholder="Slug akan diisi otomatis" readonly>
+                <small class="form-text text-muted">Slug akan diisi otomatis berdasarkan judul berita</small>
               </div>
               <div class="form-group">
                 <label>Kategori <span class="text-danger">*</span></label>
@@ -41,7 +46,8 @@
               </div>
               <div class="form-group">
                 <label>Penulis <span class="text-danger">*</span></label>
-                <input type="text" name="penulis" class="form-control" value="<?= old('penulis', $berita['penulis']) ?>" required maxlength="100" placeholder="Masukkan nama penulis">
+                <input type="text" name="penulis" id="penulis" class="form-control" value="<?= old('penulis', $berita['penulis']) ?>" required maxlength="100" placeholder="Masukkan nama penulis">
+                <small class="form-text text-muted">Penulis diisi otomatis dari nama login Anda</small>
               </div>
               <div class="form-group">
                 <label>Tanggal Terbit <span class="text-danger">*</span></label>
@@ -86,6 +92,38 @@ $(function(){
     var input = $('#input-gambar');
     var preview = $('#preview-gambar');
     var dropText = $('#dropzone-text');
+
+    // Generate slug otomatis saat judul diketik
+    $('#judul').on('input', function() {
+        var judul = $(this).val();
+        if (judul) {
+            generateSlug(judul);
+        } else {
+            $('#slug').val('');
+        }
+    });
+
+    // Function untuk generate slug
+    function generateSlug(judul) {
+        // Convert ke lowercase
+        var slug = judul.toLowerCase();
+        
+        // Replace karakter khusus dengan dash
+        slug = slug.replace(/[^a-z0-9\s-]/g, '');
+        
+        // Replace spasi dengan dash
+        slug = slug.replace(/[\s-]+/g, '-');
+        
+        // Remove dash di awal dan akhir
+        slug = slug.replace(/^-+|-+$/g, '');
+        
+        // Jika slug kosong, gunakan 'berita'
+        if (!slug) {
+            slug = 'berita';
+        }
+        
+        $('#slug').val(slug);
+    }
 
     // Klik area dropzone = klik input file
     dropzone.on('click', function(e){
@@ -149,12 +187,13 @@ $(function(){
     // Form validation
     $('form').on('submit', function(e){
         var judul = $('input[name="judul"]').val().trim();
+        var slug = $('input[name="slug"]').val().trim();
         var id_kategori = $('select[name="id_kategori"]').val();
         var penulis = $('input[name="penulis"]').val().trim();
         var tanggal_terbit = $('input[name="tanggal_terbit"]').val();
         var isi = $('textarea[name="isi"]').val().trim();
         
-        if(!judul || !id_kategori || !penulis || !tanggal_terbit || !isi){
+        if(!judul || !slug || !id_kategori || !penulis || !tanggal_terbit || !isi){
             e.preventDefault();
             Swal.fire({
                 icon: 'error',
@@ -164,5 +203,10 @@ $(function(){
             return false;
         }
     });
+
+    // Generate slug saat halaman dimuat jika judul sudah ada
+    if ($('#judul').val()) {
+        generateSlug($('#judul').val());
+    }
 });
 </script> 
