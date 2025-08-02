@@ -12,6 +12,8 @@ class Frontend extends BaseController
             $galeriModel = new \App\Models\GaleriModel();
             $profilModel = new \App\Models\ProfilModel();
             $statsModel = new \App\Models\StatsModel();
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             
             $slides = $slideModel->getActiveSlides();
             $berita_terbaru = $beritaModel->getLatest(3);
@@ -24,17 +26,20 @@ class Frontend extends BaseController
                 'berita_terbaru' => $berita_terbaru,
                 'galeri' => $galeri,
                 'profilWebsite' => $profilWebsite,
-                'stats' => $stats
+                'stats' => $stats,
+                'kategoris' => $kategoris
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend home error: ' . $e->getMessage());
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             return view('frontend/home', [
                 'slides' => [],
                 'berita_terbaru' => [],
                 'galeri' => [],
                 'profilWebsite' => null,
-                'stats' => []
+                'stats' => [],
+                'kategoris' => $kategoris
             ]);
         }
     }
@@ -44,27 +49,29 @@ class Frontend extends BaseController
         try {
             $galeriModel = new \App\Models\GaleriModel();
             $profilModel = new \App\Models\ProfilModel();
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             $search = $this->request->getGet('search');
             $sort = $this->request->getGet('sort') ?: 'latest';
-            
             $galeri = $galeriModel->getAllWithSearch($search, $sort) ?: [];
             $profilWebsite = $profilModel->getProfil();
-            
             return view('frontend/galeri', [
                 'galeri' => $galeri,
                 'search' => $search,
                 'sort' => $sort,
-                'profilWebsite' => $profilWebsite
+                'profilWebsite' => $profilWebsite,
+                'kategoris' => $kategoris
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend galeri error: ' . $e->getMessage());
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             return view('frontend/galeri', [
                 'galeri' => [],
                 'search' => '',
                 'sort' => 'latest',
-                'profilWebsite' => null
+                'profilWebsite' => null,
+                'kategoris' => $kategoris
             ]);
         }
     }
@@ -75,18 +82,18 @@ class Frontend extends BaseController
             $beritaModel = new \App\Models\BeritaModel();
             $kategoriModel = new \App\Models\KategoriModel();
             $profilModel = new \App\Models\ProfilModel();
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             $search = $this->request->getGet('search');
             $kategori = $this->request->getGet('kategori');
             $page = $this->request->getGet('page') ?: 1;
-            
             $berita = $beritaModel->getAllWithSearch($search, $kategori, $page) ?: [];
-            $kategoris = $kategoriModel->findAll() ?: [];
+            $kategoris_berita = $kategoriModel->findAll() ?: [];
             $profilWebsite = $profilModel->getProfil();
-            
             return view('frontend/berita', [
                 'berita' => $berita,
                 'kategoris' => $kategoris,
+                'kategoris_berita' => $kategoris_berita,
                 'search' => $search,
                 'kategori' => $kategori,
                 'page' => $page,
@@ -94,10 +101,12 @@ class Frontend extends BaseController
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend berita error: ' . $e->getMessage());
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             return view('frontend/berita', [
                 'berita' => [],
-                'kategoris' => [],
+                'kategoris' => $kategoris,
+                'kategoris_berita' => [],
                 'search' => '',
                 'kategori' => '',
                 'page' => 1,
@@ -111,26 +120,26 @@ class Frontend extends BaseController
         try {
             $beritaModel = new \App\Models\BeritaModel();
             $profilModel = new \App\Models\ProfilModel();
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             $berita = $beritaModel->getBeritaBySlug($slug);
-            
             if (!$berita) {
                 throw new \CodeIgniter\Exceptions\PageNotFoundException('Berita tidak ditemukan');
             }
-            
-            // Ambil berita terkait
             $berita_terkait = $beritaModel->getRelatedBerita($berita['id_berita'], $berita['id_kategori'], 3) ?: [];
             $profilWebsite = $profilModel->getProfil();
-            
             return view('frontend/berita_detail', [
                 'berita' => $berita,
                 'berita_terkait' => $berita_terkait,
-                'profilWebsite' => $profilWebsite
+                'profilWebsite' => $profilWebsite,
+                'kategoris' => $kategoris
             ]);
         } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
             throw $e;
         } catch (\Exception $e) {
             log_message('error', 'Frontend berita detail error: ' . $e->getMessage());
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Berita tidak ditemukan');
         }
     }
@@ -178,59 +187,54 @@ class Frontend extends BaseController
         try {
             $halamanModel = new \App\Models\HalamanModel();
             $profilModel = new \App\Models\ProfilModel();
-            
-            // Validasi slug
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             if (empty($slug)) {
                 throw new \CodeIgniter\Exceptions\PageNotFoundException('Slug halaman tidak valid');
             }
-            
             $halaman = $halamanModel->getHalamanBySlug($slug);
-            
             if (!$halaman) {
-                // Coba cari halaman dengan slug yang berbeda
                 $allHalaman = $halamanModel->getActiveHalaman();
                 $suggestions = [];
-                
                 foreach ($allHalaman as $h) {
                     if (similar_text($slug, $h['slug']) > strlen($slug) * 0.6) {
                         $suggestions[] = $h;
                     }
                 }
-                
-                // Jika ada saran, tampilkan halaman 404 dengan saran
                 if (!empty($suggestions)) {
                     return view('frontend/404', [
                         'message' => 'Halaman tidak ditemukan',
                         'suggestions' => $suggestions,
-                        'profilWebsite' => $profilModel->getProfil()
+                        'profilWebsite' => $profilModel->getProfil(),
+                        'kategoris' => $kategoris
                     ]);
                 }
-                
                 throw new \CodeIgniter\Exceptions\PageNotFoundException('Halaman tidak ditemukan');
             }
-            
             $profilWebsite = $profilModel->getProfil();
-            
             return view('frontend/halaman', [
                 'halaman' => $halaman,
-                'profilWebsite' => $profilWebsite
+                'profilWebsite' => $profilWebsite,
+                'kategoris' => $kategoris
             ]);
         } catch (\CodeIgniter\Exceptions\PageNotFoundException $e) {
-            // Log error untuk debugging
             log_message('error', 'Frontend halaman 404: ' . $e->getMessage() . ' - Slug: ' . ($slug ?? 'null'));
-            
-            // Tampilkan halaman 404 yang lebih informatif
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             return view('frontend/404', [
                 'message' => 'Halaman tidak ditemukan',
                 'slug' => $slug,
-                'profilWebsite' => $profilModel->getProfil() ?? null
+                'profilWebsite' => $profilModel->getProfil() ?? null,
+                'kategoris' => $kategoris
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend halaman error: ' . $e->getMessage());
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             return view('frontend/404', [
                 'message' => 'Terjadi kesalahan saat memuat halaman',
-                'profilWebsite' => $profilModel->getProfil() ?? null
+                'profilWebsite' => $profilModel->getProfil() ?? null,
+                'kategoris' => $kategoris
             ]);
         }
     }
@@ -240,50 +244,66 @@ class Frontend extends BaseController
         try {
             $downloadModel = new \App\Models\DownloadModel();
             $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $subKategoriDownloadModel = new \App\Models\SubkategoriDownloadModel();
             $profilModel = new \App\Models\ProfilModel();
             
             $search = $this->request->getGet('search');
             $kategori = $this->request->getGet('kategori');
+            $sub_kategori = $this->request->getGet('sub_kategori');
             $page = $this->request->getGet('page') ?: 1;
             
-            // Validasi input
             $search = trim($search ?? '');
             $kategori = trim($kategori ?? '');
+            $sub_kategori = trim($sub_kategori ?? '');
             $page = max(1, intval($page));
             
-            $downloads = $downloadModel->getAllWithSearch($search, $kategori, $page) ?: [];
-            $kategoris = $kategoriDownloadModel->findAll() ?: [];
+            // Ambil semua kategori dengan sub kategori
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
+            $sub_kategoris = [];
+            
+            // Jika kategori dipilih, ambil sub kategori dari kategori tersebut
+            if (!empty($kategori)) {
+                $sub_kategoris = $subKategoriDownloadModel->getByKategoriId($kategori);
+            }
+            
+            // Ambil data download berdasarkan filter
+            $downloads = $downloadModel->getAllWithSearch($search, $kategori, $sub_kategori, $page) ?: [];
             $profilWebsite = $profilModel->getProfil();
             
-            // Debug: Log kategori data
             log_message('info', 'Kategori data: ' . json_encode($kategoris));
+            log_message('info', 'Sub kategori data: ' . json_encode($sub_kategoris));
             
-            // Validasi data downloads
             foreach ($downloads as &$download) {
                 $download['judul'] = $download['judul'] ?? 'File Download';
                 $download['deskripsi'] = $download['deskripsi'] ?? '';
                 $download['file'] = $download['file'] ?? '';
                 $download['download_count'] = intval($download['download_count'] ?? 0);
                 $download['created_at'] = $download['created_at'] ?? date('Y-m-d H:i:s');
-                $download['nama_kategori'] = $download['nama_kategori'] ?? 'Umum';
+                $download['nama_kategori'] = $download['nama_kategori_download'] ?? 'Umum';
+                $download['nama_sub_kategori'] = $download['nama_sub_kategori_download'] ?? '';
             }
             
             return view('frontend/download', [
                 'downloads' => $downloads,
                 'kategoris' => $kategoris,
+                'sub_kategoris' => $sub_kategoris,
                 'search' => $search,
                 'kategori' => $kategori,
+                'sub_kategori' => $sub_kategori,
                 'page' => $page,
                 'profilWebsite' => $profilWebsite
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend download error: ' . $e->getMessage());
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             return view('frontend/download', [
                 'downloads' => [],
-                'kategoris' => [],
+                'kategoris' => $kategoris,
+                'sub_kategoris' => [],
                 'search' => '',
                 'kategori' => '',
+                'sub_kategori' => '',
                 'page' => 1,
                 'profilWebsite' => null
             ]);
@@ -292,6 +312,15 @@ class Frontend extends BaseController
     
     public function downloadFile($id)
     {
+        // Cek login user terlebih dahulu
+        if (!session()->get('logged_in')) {
+            // Simpan URL yang ingin diakses
+            $current_url = current_url();
+            session()->set('redirect_after_login', $current_url);
+            
+            return redirect()->to('/userlogin')->with('error', 'Silakan login terlebih dahulu untuk mengunduh file.');
+        }
+        
         try {
             $downloadModel = new \App\Models\DownloadModel();
             
@@ -407,6 +436,15 @@ class Frontend extends BaseController
     
     public function previewPdf($id)
     {
+        // Cek login user terlebih dahulu
+        if (!session()->get('logged_in')) {
+            // Simpan URL yang ingin diakses
+            $current_url = current_url();
+            session()->set('redirect_after_login', $current_url);
+            
+            return redirect()->to('/userlogin')->with('error', 'Silakan login terlebih dahulu untuk mengunduh file.');
+        }
+        
         try {
             $downloadModel = new \App\Models\DownloadModel();
             
@@ -470,6 +508,15 @@ class Frontend extends BaseController
     
     public function forceDownload($id)
     {
+        // Cek login user terlebih dahulu
+        if (!session()->get('logged_in')) {
+            // Simpan URL yang ingin diakses
+            $current_url = current_url();
+            session()->set('redirect_after_login', $current_url);
+            
+            return redirect()->to('/userlogin')->with('error', 'Silakan login terlebih dahulu untuk mengunduh file.');
+        }
+        
         try {
             $downloadModel = new \App\Models\DownloadModel();
             
@@ -577,20 +624,23 @@ class Frontend extends BaseController
         try {
             $profilModel = new \App\Models\ProfilModel();
             $faqModel = new \App\Models\FaqModel();
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             $profilWebsite = $profilModel->getProfil();
             $faqs = $faqModel->getFaqsForFrontend();
-            
             return view('frontend/contact', [
                 'profilWebsite' => $profilWebsite,
-                'faqs' => $faqs
+                'faqs' => $faqs,
+                'kategoris' => $kategoris
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend contact error: ' . $e->getMessage());
-            
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             return view('frontend/contact', [
                 'profilWebsite' => null,
-                'faqs' => []
+                'faqs' => [],
+                'kategoris' => $kategoris
             ]);
         }
     }
@@ -673,6 +723,8 @@ class Frontend extends BaseController
             $halamanModel = new \App\Models\HalamanModel();
             $downloadModel = new \App\Models\DownloadModel();
             $profilModel = new \App\Models\ProfilModel();
+            $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
+            $kategoris = $kategoriDownloadModel->findAll() ?? [];
             
             $berita_results = $beritaModel->search($keyword, 5) ?: [];
             $halaman_results = $halamanModel->search($keyword, 5) ?: [];
@@ -684,7 +736,8 @@ class Frontend extends BaseController
                 'berita_results' => $berita_results,
                 'halaman_results' => $halaman_results,
                 'download_results' => $download_results,
-                'profilWebsite' => $profilWebsite
+                'profilWebsite' => $profilWebsite,
+                'kategoris' => $kategoris
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend search error: ' . $e->getMessage());
@@ -694,7 +747,8 @@ class Frontend extends BaseController
                 'berita_results' => [],
                 'halaman_results' => [],
                 'download_results' => [],
-                'profilWebsite' => null
+                'profilWebsite' => null,
+                'kategoris' => $kategoris
             ]);
         }
     }

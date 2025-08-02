@@ -22,8 +22,55 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- Frontend CSS -->
     <link rel="stylesheet" href="<?= base_url('css/frontend.css') ?>">
+    <style>
+    .dropdown-menu {
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border: none;
+        padding: 8px 0;
+    }
+    
+    .dropdown-item {
+        padding: 8px 20px;
+        transition: all 0.2s ease;
+        border-radius: 4px;
+        margin: 2px 8px;
+    }
+    
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(3px);
+    }
+    
+    .dropdown-item i {
+        width: 16px;
+        text-align: center;
+    }
+    
+    .dropdown-divider {
+        margin: 8px 0;
+        border-color: #e9ecef;
+    }
+    
+    .dropdown-item.text-center {
+        text-align: center;
+        font-weight: 500;
+        color: #007bff;
+    }
+    
+    .dropdown-item.text-center:hover {
+        background-color: #007bff;
+        color: white;
+    }
+    
+    .nav-link.dropdown-toggle::after {
+        margin-left: 5px;
+    }
+    </style>
 </head>
 <body>
     <!-- Top Header -->
@@ -119,11 +166,38 @@
                             <i class="fas fa-images me-1"></i>Galeri
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= strpos(current_url(), 'frontdownload') !== false ? 'active' : '' ?>" href="<?= base_url('frontdownload') ?>">
-                            <i class="fas fa-download me-1"></i>Download
-                        </a>
-                    </li>
+                    <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle <?= strpos(current_url(), 'frontdownload') !== false ? 'active' : '' ?>" href="#" id="downloadDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="fas fa-download me-1"></i>Si Duren
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="downloadDropdown">
+    <li>
+      <a class="dropdown-item" href="<?= session()->get('logged_in') ? base_url('frontdownload') : base_url('userlogin') ?>">
+        <?php if (session()->get('logged_in')): ?>
+          <i class="fas fa-folder-open me-1"></i>Semua Kategori
+        <?php else: ?>
+          <i class="fas fa-lock me-1"></i>Login Si Duren
+        <?php endif; ?>
+      </a>
+    </li>
+    <?php if (session()->get('logged_in')): ?>
+      <?php foreach ($kategoris as $kat): ?>
+        <li>
+          <a class="dropdown-item" href="<?= base_url('frontdownload?kategori=' . $kat['id_kategori_download']) ?>">
+            <i class="fas fa-folder me-1"></i><?= htmlspecialchars($kat['nama_kategori_download']) ?>
+          </a>
+        </li>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <li><hr class="dropdown-divider"></li>
+      <li>
+        <a class="dropdown-item text-center" href="<?= base_url('userlogin') ?>">
+          <i class="fas fa-sign-in-alt me-1"></i>Login Sekarang
+        </a>
+      </li>
+    <?php endif; ?>
+  </ul>
+</li>
                 
                     <li class="nav-item">
                         <a class="nav-link <?= strpos(current_url(), 'frontcontact') !== false ? 'active' : '' ?>" href="<?= base_url('frontcontact') ?>">

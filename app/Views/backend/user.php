@@ -188,7 +188,8 @@
         </div>
       </div>
     </div>
-
+    <!-- bagian session admin -->
+    <?php if (session('role') === 'admin'): ?>
     <!-- Berita Terbaru dan Download Populer -->
     <div class="row mt-4">
       <div class="col-xl-6">
@@ -292,7 +293,7 @@
         </div>
       </div>
     </div>
-
+ 
     <!-- Slide Aktif -->
     <div class="row mt-4">
       <div class="col-xl-12">
@@ -372,7 +373,8 @@
         </div>
       </div>
     </div>
-
+    <!-- end of admin -->
+    <?php endif; ?>
     <!-- Footer -->
     <?= $this->include('backend/footeradmin') ?>
   </div>

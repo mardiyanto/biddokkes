@@ -14,7 +14,8 @@ class KategoriDownloadModel extends Model
     public function getKategoriWithCount()
     {
         return $this->select('kategori_download.*, COUNT(download.id_download) as jumlah_download')
-                    ->join('download', 'download.id_kategori_download = kategori_download.id_kategori_download', 'left')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_kategori_download = kategori_download.id_kategori_download', 'left')
+                    ->join('download', 'download.id_sub_kategori_download = sub_kategori_download.id_sub_kategori_download', 'left')
                     ->groupBy('kategori_download.id_kategori_download')
                     ->findAll();
     }

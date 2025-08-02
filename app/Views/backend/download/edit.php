@@ -46,7 +46,19 @@
                 <?php endif; ?>
                 <small class="form-text text-muted">Minimal 3 karakter, maksimal 255 karakter</small>
               </div>
-
+              <div class="form-group">
+                <label for="tanggal_upload">Tanggal Upload <span class="text-danger">*</span></label>
+                <input type="date" class="form-control <?= (session()->getFlashdata('errors.tanggal_upload')) ? 'is-invalid' : '' ?>" 
+                       id="tanggal_upload" name="tanggal_upload" 
+                       value="<?= old('tanggal_upload', $download['tanggal_upload']) ?>" 
+                       placeholder="Masukkan tanggal upload" required>
+                <?php if (session()->getFlashdata('errors.tanggal_upload')): ?>
+                  <div class="invalid-feedback">
+                    <?= session()->getFlashdata('errors.tanggal_upload') ?>
+                  </div>
+                <?php endif; ?>
+                <small class="form-text text-muted">Format tanggal: YYYY-MM-DD</small>
+              </div>
               <div class="form-group">
                 <label for="deskripsi">Deskripsi <span class="text-danger">*</span></label>
                 <textarea class="form-control <?= (session()->getFlashdata('errors.deskripsi')) ? 'is-invalid' : '' ?>" 
@@ -77,6 +89,27 @@
                     <?= session()->getFlashdata('errors.id_kategori_download') ?>
                   </div>
                 <?php endif; ?>
+                <small class="form-text text-muted">Pilih kategori download terlebih dahulu</small>
+              </div>
+
+              <div class="form-group">
+                <label for="id_sub_kategori_download">Sub Kategori <span class="text-danger">*</span></label>
+                <select class="form-control <?= (session()->getFlashdata('errors.id_sub_kategori_download')) ? 'is-invalid' : '' ?>" 
+                        id="id_sub_kategori_download" name="id_sub_kategori_download" required>
+                  <option value="">Pilih Sub Kategori</option>
+                  <?php foreach ($sub_kategori_download as $sub_kategori): ?>
+                    <option value="<?= $sub_kategori['id_sub_kategori_download'] ?>" 
+                            <?= (old('id_sub_kategori_download', $download['id_sub_kategori_download']) == $sub_kategori['id_sub_kategori_download']) ? 'selected' : '' ?>>
+                      <?= esc($sub_kategori['nama_sub_kategori_download']) ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+                <?php if (session()->getFlashdata('errors.id_sub_kategori_download')): ?>
+                  <div class="invalid-feedback">
+                    <?= session()->getFlashdata('errors.id_sub_kategori_download') ?>
+                  </div>
+                <?php endif; ?>
+                <small class="form-text text-muted">Pilih sub kategori setelah memilih kategori</small>
               </div>
 
               <div class="form-group">
@@ -287,6 +320,9 @@ $(document).ready(function() {
       id_kategori_download: {
         required: true
       },
+      id_sub_kategori_download: {
+        required: true
+      },
       file: {
         extension: "pdf|doc|docx|xls|xlsx|ppt|pptx|txt|zip|rar"
       }
@@ -303,6 +339,9 @@ $(document).ready(function() {
       },
       id_kategori_download: {
         required: "Kategori download harus dipilih"
+      },
+      id_sub_kategori_download: {
+        required: "Sub kategori download harus dipilih"
       },
       file: {
         extension: "Format file tidak diizinkan"
@@ -349,6 +388,80 @@ $(document).ready(function() {
       }
     }
   });
+
+  // Dropdown kategori dan sub kategori yang saling terkait
+  $('#id_kategori_download').on('change', function() {
+    var kategoriId = $(this).val();
+    var subKategoriSelect = $('#id_sub_kategori_download');
+    
+    // Reset sub kategori dropdown
+    subKategoriSelect.html('<option value="">Pilih Sub Kategori</option>');
+    
+    if (kategoriId) {
+      // Tampilkan loading
+      subKategoriSelect.prop('disabled', true);
+      subKategoriSelect.html('<option value="">Loading...</option>');
+      
+      // Ajax request untuk mengambil sub kategori
+      $.ajax({
+        url: '<?= base_url('download/get-sub-kategori-by-kategori') ?>',
+        type: 'POST',
+        data: {
+          id_kategori_download: kategoriId
+        },
+        dataType: 'json',
+        success: function(response) {
+          subKategoriSelect.prop('disabled', false);
+          
+          if (response.success && response.data.length > 0) {
+            subKategoriSelect.html('<option value="">Pilih Sub Kategori</option>');
+            $.each(response.data, function(index, subKategori) {
+              var selected = (subKategori.id_sub_kategori_download == '<?= $download['id_sub_kategori_download'] ?? '' ?>') ? 'selected' : '';
+              subKategoriSelect.append('<option value="' + subKategori.id_sub_kategori_download + '" ' + selected + '>' + subKategori.nama_sub_kategori_download + '</option>');
+            });
+          } else {
+            subKategoriSelect.html('<option value="">Tidak ada sub kategori</option>');
+          }
+        },
+        error: function() {
+          subKategoriSelect.prop('disabled', false);
+          subKategoriSelect.html('<option value="">Error loading sub kategori</option>');
+        }
+      });
+    }
+  });
+
+  // Load sub kategori saat halaman dimuat (jika kategori sudah dipilih)
+  var selectedKategoriId = $('#id_kategori_download').val();
+  var selectedSubKategoriId = '<?= $download['id_sub_kategori_download'] ?? '' ?>';
+  
+  if (selectedKategoriId) {
+    // Load sub kategori berdasarkan kategori yang dipilih
+    $.ajax({
+      url: '<?= base_url('download/get-sub-kategori-by-kategori') ?>',
+      type: 'POST',
+      data: {
+        id_kategori_download: selectedKategoriId
+      },
+      dataType: 'json',
+      success: function(response) {
+        var subKategoriSelect = $('#id_sub_kategori_download');
+        
+        if (response.success && response.data.length > 0) {
+          subKategoriSelect.html('<option value="">Pilih Sub Kategori</option>');
+          $.each(response.data, function(index, subKategori) {
+            var selected = (subKategori.id_sub_kategori_download == selectedSubKategoriId) ? 'selected' : '';
+            subKategoriSelect.append('<option value="' + subKategori.id_sub_kategori_download + '" ' + selected + '>' + subKategori.nama_sub_kategori_download + '</option>');
+          });
+        } else {
+          subKategoriSelect.html('<option value="">Tidak ada sub kategori</option>');
+        }
+      },
+      error: function() {
+        $('#id_sub_kategori_download').html('<option value="">Error loading sub kategori</option>');
+      }
+    });
+  }
 });
 </script>
 

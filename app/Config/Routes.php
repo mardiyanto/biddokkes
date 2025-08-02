@@ -43,6 +43,16 @@ $routes->get('kategori-download/edit/(:num)', 'KategoriDownload::edit/$1');
 $routes->post('kategori-download/update/(:num)', 'KategoriDownload::update/$1');
 $routes->get('kategori-download/delete/(:num)', 'KategoriDownload::delete/$1');
 
+// Admin routes (sub kategori download)
+$routes->get('subkategoridownload', 'SubKategoriDownload::index');
+$routes->get('subkategoridownload/create', 'SubKategoriDownload::create');
+$routes->post('subkategoridownload/store', 'SubKategoriDownload::store');
+$routes->get('subkategoridownload/edit/(:num)', 'SubKategoriDownload::edit/$1');
+$routes->post('subkategoridownload/update/(:num)', 'SubKategoriDownload::update/$1');
+$routes->get('subkategoridownload/delete/(:num)', 'SubKategoriDownload::delete/$1');
+$routes->post('subkategoridownload/get-by-kategori', 'SubKategoriDownload::getByKategoriId');
+$routes->post('subkategoridownload/get-for-dropdown', 'SubKategoriDownload::getForDropdown');
+
 // Admin routes (download)
 $routes->get('download', 'Download::index');
 $routes->get('download/create', 'Download::create');
@@ -51,6 +61,7 @@ $routes->get('download/edit/(:num)', 'Download::edit/$1');
 $routes->post('download/update/(:num)', 'Download::update/$1');
 $routes->get('download/delete/(:num)', 'Download::delete/$1');
 $routes->get('download/download/(:num)', 'Download::download/$1');
+$routes->post('download/get-sub-kategori-by-kategori', 'Download::getSubKategoriByKategori');
 
 // Admin routes (halaman)
 $routes->get('halaman', 'Halaman::index');
@@ -97,6 +108,9 @@ $routes->get('profil', 'Profil::index');
 $routes->post('profil/update', 'Profil::update');
 
 // Frontend routes (dengan prefix 'front' untuk menghindari konflik)
+$routes->get('userlogin', 'UserLogin::index');
+$routes->post('userlogin/doLogin', 'UserLogin::doLogin');
+$routes->get('userlogin/logout', 'UserLogin::logout');
 $routes->get('frontberita', 'Frontend::berita');
 $routes->get('frontberita/(:segment)', 'Frontend::beritaDetail/$1');
 $routes->get('frontberita/detail/(:num)', 'Frontend::beritaDetailById/$1');

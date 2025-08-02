@@ -39,7 +39,7 @@
                     <div class="d-flex justify-content-lg-end">
                         <select class="form-select w-auto" id="kategoriSelect" onchange="changeKategori(this.value)">
                             <option value="">Semua Kategori</option>
-                            <?php foreach ($kategoris as $kat): ?>
+                            <?php foreach ($kategoris_berita as $kat): ?>
                             <option value="<?= $kat['id_kategori'] ?>" <?= ($kategori ?? '') == $kat['id_kategori'] ? 'selected' : '' ?>>
                                 <?= $kat['nama_kategori'] ?>
                             </option>

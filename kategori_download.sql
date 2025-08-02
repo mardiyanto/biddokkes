@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 15, 2025 at 08:16 AM
+-- Generation Time: Aug 01, 2025 at 07:05 AM
 -- Server version: 10.4.32-MariaDB-log
 -- PHP Version: 8.1.10
 
@@ -38,7 +38,9 @@ CREATE TABLE `kategori_download` (
 --
 
 INSERT INTO `kategori_download` (`id_kategori_download`, `nama_kategori_download`, `created_at`) VALUES
-(1, 'Dokumen', '2025-07-14 10:23:44');
+(1, 'Dokumen', '2025-07-14 10:23:44'),
+(3, 'PRODUK DOKKES', '2025-07-15 15:54:51'),
+(5, 'PRODUK REN', '2025-07-15 16:18:24');
 
 --
 -- Indexes for dumped tables
@@ -58,7 +60,7 @@ ALTER TABLE `kategori_download`
 -- AUTO_INCREMENT for table `kategori_download`
 --
 ALTER TABLE `kategori_download`
-  MODIFY `id_kategori_download` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kategori_download` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

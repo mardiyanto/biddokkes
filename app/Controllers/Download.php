@@ -4,16 +4,19 @@ namespace App\Controllers;
 
 use App\Models\DownloadModel;
 use App\Models\KategoriDownloadModel;
+use App\Models\SubkategoriDownloadModel;
 
 class Download extends BaseController
 {
     protected $downloadModel;
     protected $kategoriDownloadModel;
+    protected $subKategoriDownloadModel;
 
     public function __construct()
     {
         $this->downloadModel = new DownloadModel();
         $this->kategoriDownloadModel = new KategoriDownloadModel();
+        $this->subKategoriDownloadModel = new SubkategoriDownloadModel();
     }
 
     public function index()
@@ -31,16 +34,10 @@ class Download extends BaseController
 
     public function create()
     {
-        $session = session();
-        if (!$session->get('logged_in')) {
-            return redirect()->to('/login')->with('error', 'Silakan login terlebih dahulu.');
-        }
-        if ($session->get('role') !== 'admin') {
-            return redirect()->to('/dashboard/' . $session->get('role'))->with('error', 'Anda tidak punya akses ke halaman ini.');
-        }
-
-        $data['kategori_download'] = $this->kategoriDownloadModel->findAll();
-        $data['title'] = 'Tambah File Download';
+        $data = [
+            'title' => 'Tambah File Download',
+            'kategori_download' => $this->kategoriDownloadModel->findAll()
+        ];
         return view('backend/download/create', $data);
     }
 
@@ -70,11 +67,11 @@ class Download extends BaseController
                     'min_length' => 'Deskripsi minimal 10 karakter'
                 ]
             ],
-            'id_kategori_download' => [
+            'id_sub_kategori_download' => [
                 'rules' => 'required|numeric',
                 'errors' => [
-                    'required' => 'Kategori harus dipilih',
-                    'numeric' => 'Kategori tidak valid'
+                    'required' => 'Sub kategori harus dipilih',
+                    'numeric' => 'Sub kategori tidak valid'
                 ]
             ],
             'file' => [
@@ -108,13 +105,13 @@ class Download extends BaseController
             $data = [
                 'judul' => trim($this->request->getPost('judul')),
                 'deskripsi' => trim($this->request->getPost('deskripsi')),
-                'id_kategori_download' => $this->request->getPost('id_kategori_download'),
+                'id_sub_kategori_download' => $this->request->getPost('id_sub_kategori_download'),
                 'nama_file' => $newName,
                 'ukuran_file' => $file->getSize(),
                 'tipe_file' => $file->getClientExtension(),
                 'hits' => 0,
                 'download_count' => 0,
-                'tanggal_upload' => date('Y-m-d')
+                'tanggal_upload' => trim($this->request->getPost('tanggal_upload'))
             ];
 
             try {
@@ -142,17 +139,23 @@ class Download extends BaseController
             return redirect()->to('/dashboard/' . $session->get('role'))->with('error', 'Anda tidak punya akses ke halaman ini.');
         }
 
-        if ($id === null) {
-            return redirect()->to('/download')->with('error', 'ID download tidak ditemukan');
+        $download = $this->downloadModel->getByIdWithKategori($id);
+        if (!$download) {
+            return redirect()->to('/download')->with('error', 'File download tidak ditemukan.');
         }
 
-        $data['download'] = $this->downloadModel->find($id);
-        if (!$data['download']) {
-            return redirect()->to('/download')->with('error', 'File download tidak ditemukan');
-        }
+        // Ambil data kategori download untuk dropdown
+        $kategori_download = $this->kategoriDownloadModel->findAll();
+        
+        // Ambil data sub kategori berdasarkan kategori yang dipilih
+        $sub_kategori_download = $this->subKategoriDownloadModel->getByKategoriId($download['id_kategori_download']);
 
-        $data['kategori_download'] = $this->kategoriDownloadModel->findAll();
-        $data['title'] = 'Edit File Download';
+        $data = [
+            'title' => 'Edit File Download',
+            'download' => $download,
+            'kategori_download' => $kategori_download,
+            'sub_kategori_download' => $sub_kategori_download
+        ];
         return view('backend/download/edit', $data);
     }
 
@@ -191,11 +194,11 @@ class Download extends BaseController
                     'min_length' => 'Deskripsi minimal 10 karakter'
                 ]
             ],
-            'id_kategori_download' => [
+            'id_sub_kategori_download' => [
                 'rules' => 'required|numeric',
                 'errors' => [
-                    'required' => 'Kategori harus dipilih',
-                    'numeric' => 'Kategori tidak valid'
+                    'required' => 'Sub kategori harus dipilih',
+                    'numeric' => 'Sub kategori tidak valid'
                 ]
             ]
         ];
@@ -219,7 +222,8 @@ class Download extends BaseController
         $data = [
             'judul' => trim($this->request->getPost('judul')),
             'deskripsi' => trim($this->request->getPost('deskripsi')),
-            'id_kategori_download' => $this->request->getPost('id_kategori_download')
+            'id_sub_kategori_download' => $this->request->getPost('id_sub_kategori_download'),
+            'tanggal_upload' => trim($this->request->getPost('tanggal_upload'))
         ];
 
         // Jika ada file baru
@@ -378,5 +382,24 @@ class Download extends BaseController
             log_message('error', 'Download backend error: ' . $e->getMessage());
             return redirect()->back()->with('error', 'File tidak dapat diunduh');
         }
+    }
+
+    /**
+     * Get sub categories by parent category ID (AJAX)
+     */
+    public function getSubKategoriByKategori()
+    {
+        $id_kategori_download = $this->request->getPost('id_kategori_download');
+        
+        if (!$id_kategori_download) {
+            return $this->response->setJSON(['success' => false, 'message' => 'ID kategori tidak valid']);
+        }
+
+        $sub_kategoris = $this->subKategoriDownloadModel->getByKategoriId($id_kategori_download);
+        
+        return $this->response->setJSON([
+            'success' => true,
+            'data' => $sub_kategoris
+        ]);
     }
 } 

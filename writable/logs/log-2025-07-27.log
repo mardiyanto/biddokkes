@@ -1,0 +1,229 @@
+DEBUG - 2025-07-27 19:31:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 19:31:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 19:31:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 19:32:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 19:32:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 19:32:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 19:32:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-07-27 19:35:26 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 19:37:15 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 19:43:38 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+ERROR - 2025-07-27 19:43:43 --> Frontend home error: Undefined variable $kategoris
+CRITICAL - 2025-07-27 19:43:43 --> ErrorException: Undefined variable $kategoris
+[Method: GET, Route: /]
+in APPPATH\Views\frontend\layout\header.php on line 133.
+ 1 APPPATH\Views\frontend\layout\header.php(133): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $kategoris', 'D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\layout\\header.php', 133)
+ 2 SYSTEMPATH\View\View.php(224): include('D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\layout\\header.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(475): CodeIgniter\View\View->render('frontend/layout/header', null, true)
+ 5 APPPATH\Views\frontend\home.php(1): CodeIgniter\View\View->include('frontend/layout/header')
+ 6 SYSTEMPATH\View\View.php(224): include('D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\home.php')
+ 7 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('frontend/home', [], true)
+ 9 APPPATH\Controllers\Frontend.php(33): view('frontend/home', [...])
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Frontend->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-07-27 19:46:06 --> Frontend home error: Undefined variable $kategoris
+CRITICAL - 2025-07-27 19:46:06 --> ErrorException: Undefined variable $kategoris
+[Method: GET, Route: /]
+in APPPATH\Views\frontend\layout\header.php on line 128.
+ 1 APPPATH\Views\frontend\layout\header.php(128): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $kategoris', 'D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\layout\\header.php', 128)
+ 2 SYSTEMPATH\View\View.php(224): include('D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\layout\\header.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(475): CodeIgniter\View\View->render('frontend/layout/header', null, true)
+ 5 APPPATH\Views\frontend\home.php(1): CodeIgniter\View\View->include('frontend/layout/header')
+ 6 SYSTEMPATH\View\View.php(224): include('D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\home.php')
+ 7 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('frontend/home', [], true)
+ 9 APPPATH\Controllers\Frontend.php(33): view('frontend/home', [...])
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Frontend->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-07-27 19:54:14 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 19:54:18 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 19:54:20 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 19:54:22 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 19:54:48 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 20:22:20 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 20:22:23 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+DEBUG - 2025-07-27 20:27:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:27:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:28:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:28:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:30:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:30:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:31:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:31:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:31:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:31:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:31:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:31:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:50:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:50:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:50:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:50:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:50:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:51:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:52:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:53:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:53:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:54:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:54:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:57:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:58:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:58:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:58:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:58:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:58:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:58:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:58:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:59:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:59:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:59:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 20:59:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:00:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:00:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:00:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:00:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:00:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-07-27 21:01:31 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+DEBUG - 2025-07-27 21:03:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:03:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:03:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:03:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-07-27 21:03:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-07-27 21:03:47 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 21:04:04 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 21:04:12 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 21:04:15 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 21:04:23 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+INFO - 2025-07-27 21:04:45 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"}]
+DEBUG - 2025-07-27 21:06:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-07-27 21:09:41 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:09:41 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:10:02 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:10:02 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+DEBUG - 2025-07-27 21:10:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-07-27 21:10:19 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:10:19 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:10:27 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:10:27 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:10:29 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:10:29 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:11:12 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:11:12 --> ErrorException: Undefined array key "id_kategori"
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 43.
+ 1 APPPATH\Views\frontend\berita.php(43): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id_kategori"', 'D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\berita.php', 43)
+ 2 SYSTEMPATH\View\View.php(224): include('D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\berita.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('frontend/berita', [], true)
+ 5 APPPATH\Controllers\Frontend.php(107): view('frontend/berita', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Frontend->berita()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-07-27 21:11:20 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:11:20 --> ErrorException: Undefined array key "id_kategori"
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 43.
+ 1 APPPATH\Views\frontend\berita.php(43): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "id_kategori"', 'D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\berita.php', 43)
+ 2 SYSTEMPATH\View\View.php(224): include('D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\berita.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('frontend/berita', [], true)
+ 5 APPPATH\Controllers\Frontend.php(107): view('frontend/berita', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Frontend->berita()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-07-27 21:11:29 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:11:29 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:11:33 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:11:33 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:12:06 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:12:06 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:12:20 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:12:20 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:12:22 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:12:22 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:12:36 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:12:36 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2025-07-27 21:12:38 --> Frontend berita error: Undefined array key "id_kategori"
+CRITICAL - 2025-07-27 21:12:38 --> ErrorException: Cannot redeclare timeAgo() (previously declared in D:\laragon\www\Biddokkes\app\Views\frontend\berita.php:192)
+[Method: GET, Route: frontberita]
+in APPPATH\Views\frontend\berita.php on line 192.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()

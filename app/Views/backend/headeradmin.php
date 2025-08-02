@@ -114,7 +114,7 @@
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
-          
+          <?php if (session('role') === 'admin'): ?>
           <!-- Konten Website -->
           <li class="nav-item">
             <a class="nav-link" href="#navbar-konten" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-konten">
@@ -151,7 +151,7 @@
               </ul>
             </div>
           </li>
-          
+         
           <!-- Kategori -->
           <li class="nav-item">
             <a class="nav-link" href="#navbar-kategori" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-kategori">
@@ -170,17 +170,22 @@
                     <i class="ni ni-folder-17 text-green"></i> Kategori Download
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?= base_url('subkategoridownload') ?>">
+                    <i class="ni ni-folder-17 text-green"></i> Sub Kategori Download
+                  </a>
+                </li>
               </ul>
             </div>
           </li>
-          
+          <?php endif; ?>
           <!-- Download -->
           <li class="nav-item <?= (current_url() == base_url('download')) ? 'active' : '' ?>">
             <a class="nav-link <?= (current_url() == base_url('download')) ? 'active' : '' ?>" href="<?= base_url('download') ?>">
               <i class="ni ni-key-25 text-info"></i> Download
             </a>
           </li>
-          
+          <?php if (session('role') === 'admin'): ?>
           <!-- Pesan Kontak -->
           <li class="nav-item <?= (current_url() == base_url('pesan-kontak')) ? 'active' : '' ?>">
             <a class="nav-link <?= (current_url() == base_url('pesan-kontak')) ? 'active' : '' ?>" href="<?= base_url('pesan-kontak') ?>">
@@ -222,6 +227,19 @@
                 </li>
               </ul>
             </div>
+          </li>
+          <?php endif; ?>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('userlogin/logout') ?>">
+              <i class="ni ni-user-run"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('index.php') ?>">
+              <i class="ni ni-world"></i>
+              <span>Lihat website</span>
+            </a>
           </li>
         </ul>
         <!-- Divider -->

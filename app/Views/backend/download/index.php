@@ -34,6 +34,7 @@
                     <th>No</th>
                     <th>Judul</th>
                     <th>Kategori</th>
+                    <th>Sub Kategori</th>
                     <th>File</th>
                     <th>Ukuran</th>
                     <th>Download</th>
@@ -49,6 +50,9 @@
                       <td><?= esc($download['judul']) ?></td>
                       <td>
                         <span class="badge badge-info"><?= esc($download['nama_kategori_download']) ?></span>
+                      </td>
+                      <td>
+                        <span class="badge badge-warning"><?= esc($download['nama_sub_kategori_download']) ?></span>
                       </td>
                       <td>
                         <i class="fas fa-file-<?= getFileIcon($download['tipe_file']) ?> text-primary"></i>
@@ -75,7 +79,7 @@
                     </tr>
                     <?php endforeach; ?>
                   <?php else: ?>
-                    <tr><td colspan="8" class="text-center">Tidak ada data file download.</td></tr>
+                    <tr><td colspan="9" class="text-center">Tidak ada data file download.</td></tr>
                   <?php endif; ?>
                 </tbody>
               </table>

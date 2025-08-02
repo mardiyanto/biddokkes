@@ -9,7 +9,7 @@ class DownloadModel extends Model
     protected $table = 'download';
     protected $primaryKey = 'id_download';
     protected $allowedFields = [
-        'id_kategori_download', 
+        'id_sub_kategori_download', 
         'judul', 
         'deskripsi', 
         'download_count',
@@ -25,16 +25,18 @@ class DownloadModel extends Model
 
     public function getDownloadWithKategori()
     {
-        return $this->select('download.*, kategori_download.nama_kategori_download')
-                    ->join('kategori_download', 'kategori_download.id_kategori_download = download.id_kategori_download')
+        return $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                    ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download')
                     ->orderBy('download.created_at', 'DESC')
                     ->findAll();
     }
 
     public function getLatest($limit = 10)
     {
-        return $this->select('download.*, kategori_download.nama_kategori_download')
-                    ->join('kategori_download', 'kategori_download.id_kategori_download = download.id_kategori_download')
+        return $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                    ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download')
                     ->orderBy('download.created_at', 'DESC')
                     ->limit($limit)
                     ->findAll();
@@ -42,9 +44,21 @@ class DownloadModel extends Model
 
     public function getDownloadByKategori($id_kategori_download, $limit = 10)
     {
-        return $this->select('download.*, kategori_download.nama_kategori_download')
-                    ->join('kategori_download', 'kategori_download.id_kategori_download = download.id_kategori_download')
-                    ->where('download.id_kategori_download', $id_kategori_download)
+        return $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                    ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download')
+                    ->where('kategori_download.id_kategori_download', $id_kategori_download)
+                    ->orderBy('download.created_at', 'DESC')
+                    ->limit($limit)
+                    ->findAll();
+    }
+
+    public function getDownloadBySubKategori($id_sub_kategori_download, $limit = 10)
+    {
+        return $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                    ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download')
+                    ->where('download.id_sub_kategori_download', $id_sub_kategori_download)
                     ->orderBy('download.created_at', 'DESC')
                     ->limit($limit)
                     ->findAll();
@@ -52,8 +66,9 @@ class DownloadModel extends Model
 
     public function getPopularDownloads($limit = 10)
     {
-        return $this->select('download.*, kategori_download.nama_kategori_download')
-                    ->join('kategori_download', 'kategori_download.id_kategori_download = download.id_kategori_download')
+        return $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                    ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download')
                     ->orderBy('download.hits', 'DESC')
                     ->limit($limit)
                     ->findAll();
@@ -61,8 +76,9 @@ class DownloadModel extends Model
 
     public function searchDownload($keyword)
     {
-        return $this->select('download.*, kategori_download.nama_kategori_download')
-                    ->join('kategori_download', 'kategori_download.id_kategori_download = download.id_kategori_download')
+        return $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                    ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download')
                     ->like('download.judul', $keyword)
                     ->orLike('download.deskripsi', $keyword)
                     ->orderBy('download.created_at', 'DESC')
@@ -71,8 +87,9 @@ class DownloadModel extends Model
 
     public function search($keyword, $limit = 5)
     {
-        return $this->select('download.*, kategori_download.nama_kategori_download')
-                    ->join('kategori_download', 'kategori_download.id_kategori_download = download.id_kategori_download')
+        return $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                    ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download')
                     ->groupStart()
                     ->like('download.judul', $keyword)
                     ->orLike('download.deskripsi', $keyword)
@@ -82,24 +99,39 @@ class DownloadModel extends Model
                     ->findAll();
     }
     
-    public function getAllWithSearch($search = '', $kategori = '', $page = 1, $perPage = 12)
+    public function getAllWithSearch($search = '', $kategori = '', $sub_kategori = '', $page = 1, $per_page = 12)
     {
-        $builder = $this->select('download.*, kategori_download.nama_kategori_download')
-                        ->join('kategori_download', 'kategori_download.id_kategori_download = download.id_kategori_download');
+        $builder = $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                        ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                        ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download');
         
-        if ($search) {
+        // Filter berdasarkan search
+        if (!empty($search)) {
             $builder->groupStart()
                     ->like('download.judul', $search)
                     ->orLike('download.deskripsi', $search)
+                    ->orLike('kategori_download.nama_kategori_download', $search)
+                    ->orLike('sub_kategori_download.nama_sub_kategori_download', $search)
                     ->groupEnd();
         }
         
-        if ($kategori) {
-            $builder->where('download.id_kategori_download', $kategori);
+        // Filter berdasarkan kategori
+        if (!empty($kategori)) {
+            $builder->where('kategori_download.id_kategori_download', $kategori);
         }
         
-        return $builder->orderBy('download.created_at', 'DESC')
-                       ->paginate($perPage, 'default', $page);
+        // Filter berdasarkan sub kategori
+        if (!empty($sub_kategori)) {
+            $builder->where('sub_kategori_download.id_sub_kategori_download', $sub_kategori);
+        }
+        
+        $builder->orderBy('download.created_at', 'DESC');
+        
+        // Pagination
+        $offset = ($page - 1) * $per_page;
+        $builder->limit($per_page, $offset);
+        
+        return $builder->findAll();
     }
 
     public function formatFileSize($bytes)
@@ -113,5 +145,14 @@ class DownloadModel extends Model
         } else {
             return $bytes . ' bytes';
         }
+    }
+
+    public function getByIdWithKategori($id)
+    {
+        return $this->select('download.*, sub_kategori_download.nama_sub_kategori_download, kategori_download.nama_kategori_download')
+                    ->join('sub_kategori_download', 'sub_kategori_download.id_sub_kategori_download = download.id_sub_kategori_download')
+                    ->join('kategori_download', 'kategori_download.id_kategori_download = sub_kategori_download.id_kategori_download')
+                    ->where('download.id_download', $id)
+                    ->first();
     }
 } 

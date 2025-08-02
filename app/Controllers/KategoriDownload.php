@@ -191,10 +191,18 @@ class KategoriDownload extends BaseController
 
             // Cek apakah kategori masih digunakan di tabel download
             $downloadModel = new \App\Models\DownloadModel();
-            $download_count = $downloadModel->where('id_kategori_download', $id)->countAllResults();
+            $subKategoriModel = new \App\Models\SubkategoriDownloadModel();
             
-            if ($download_count > 0) {
-                return redirect()->to('/kategori-download')->with('error', 'Kategori tidak dapat dihapus karena masih digunakan oleh ' . $download_count . ' file download');
+            // Ambil semua sub kategori dari kategori ini
+            $sub_kategoris = $subKategoriModel->where('id_kategori_download', $id)->findAll();
+            $sub_kategori_ids = array_column($sub_kategoris, 'id_sub_kategori_download');
+            
+            if (!empty($sub_kategori_ids)) {
+                $download_count = $downloadModel->whereIn('id_sub_kategori_download', $sub_kategori_ids)->countAllResults();
+                
+                if ($download_count > 0) {
+                    return redirect()->to('/kategori-download')->with('error', 'Kategori tidak dapat dihapus karena masih digunakan oleh ' . $download_count . ' file download');
+                }
             }
 
             $this->kategoriDownloadModel->delete($id);
