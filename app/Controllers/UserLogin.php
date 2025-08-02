@@ -32,7 +32,8 @@ class UserLogin extends BaseController
                 'username' => $user['username'],
                 'role' => $user['role'],
                 'nama' => $user['nama'],
-                'logged_in' => true
+                'logged_in' => true,
+                'show_welcome_modal' => true // Flag untuk menampilkan modal selamat datang
             ]);
             
             // Redirect ke halaman download untuk user frontend
@@ -60,5 +61,16 @@ class UserLogin extends BaseController
         }
         
         return true;
+    }
+    
+    public function clearWelcomeFlag()
+    {
+        // Method untuk menghapus flag show_welcome_modal
+        if (session()->get('logged_in')) {
+            session()->remove('show_welcome_modal');
+            return $this->response->setJSON(['success' => true]);
+        }
+        
+        return $this->response->setJSON(['success' => false]);
     }
 } 

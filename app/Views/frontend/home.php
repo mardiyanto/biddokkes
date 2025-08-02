@@ -170,12 +170,14 @@
                 <div class="about-content">
                     <div class="section-header mb-4">
                         <h6 class="text-primary fw-bold mb-2">TENTANG KAMI</h6>
-                        <h2 class="section-title"><?= $profilWebsite['nama_website'] ?? 'Biddokkes POLRI' ?></h2>
+                        <h2 class="section-title"><?= $tentangKami['judul'] ?? ($profilWebsite['nama_website'] ?? 'Biddokkes POLRI') ?></h2>
                         <div class="title-line"></div>
                     </div>
                     
                     <div class="about-text">
-                        <?php if (!empty($profilWebsite['deskripsi'])): ?>
+                        <?php if (!empty($tentangKami['konten'])): ?>
+                            <?= $tentangKami['konten'] ?>
+                        <?php elseif (!empty($profilWebsite['deskripsi'])): ?>
                             <?= $profilWebsite['deskripsi'] ?>
                         <?php else: ?>
                             <p>Biddokkes POLRI adalah Pusat Kesehatan Kepolisian Republik Indonesia yang bertugas memberikan layanan kesehatan terbaik bagi anggota Polri dan masyarakat.</p>

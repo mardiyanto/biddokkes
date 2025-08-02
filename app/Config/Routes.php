@@ -113,6 +113,7 @@ $routes->post('profil/update', 'Profil::update');
 $routes->get('userlogin', 'UserLogin::index');
 $routes->post('userlogin/doLogin', 'UserLogin::doLogin');
 $routes->get('userlogin/logout', 'UserLogin::logout');
+$routes->post('userlogin/clear-welcome-flag', 'UserLogin::clearWelcomeFlag');
 $routes->get('frontberita', 'Frontend::berita');
 $routes->get('frontberita/(:segment)', 'Frontend::beritaDetail/$1');
 $routes->get('frontberita/detail/(:num)', 'Frontend::beritaDetailById/$1');

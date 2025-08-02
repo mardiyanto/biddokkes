@@ -12,6 +12,7 @@ class Frontend extends BaseController
             $galeriModel = new \App\Models\GaleriModel();
             $profilModel = new \App\Models\ProfilModel();
             $statsModel = new \App\Models\StatsModel();
+            $halamanModel = new \App\Models\HalamanModel();
             $kategoriDownloadModel = new \App\Models\KategoriDownloadModel();
             $kategoris = $kategoriDownloadModel->findAll() ?? [];
             
@@ -21,13 +22,17 @@ class Frontend extends BaseController
             $profilWebsite = $profilModel->getProfil();
             $stats = $statsModel->getActiveStats(4); // Ambil 4 stats aktif untuk frontend
             
+            // Ambil halaman "Tentang Kami" dengan ID 1
+            $tentangKami = $halamanModel->getHalamanById(1);
+            
             return view('frontend/home', [
                 'slides' => $slides,
                 'berita_terbaru' => $berita_terbaru,
                 'galeri' => $galeri,
                 'profilWebsite' => $profilWebsite,
                 'stats' => $stats,
-                'kategoris' => $kategoris
+                'kategoris' => $kategoris,
+                'tentangKami' => $tentangKami
             ]);
         } catch (\Exception $e) {
             log_message('error', 'Frontend home error: ' . $e->getMessage());
@@ -39,7 +44,8 @@ class Frontend extends BaseController
                 'galeri' => [],
                 'profilWebsite' => null,
                 'stats' => [],
-                'kategoris' => $kategoris
+                'kategoris' => $kategoris,
+                'tentangKami' => null
             ]);
         }
     }

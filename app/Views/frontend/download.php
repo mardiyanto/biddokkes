@@ -137,6 +137,96 @@
         margin-bottom: 5px;
     }
 }
+
+/* SI-DUREN Welcome Modal Styling */
+#siDurenWelcomeModal .modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+#siDurenWelcomeModal .modal-header {
+    border-radius: 15px 15px 0 0;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+}
+
+#siDurenWelcomeModal .modal-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+#siDurenWelcomeModal .modal-body {
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+#siDurenWelcomeModal .welcome-content {
+    line-height: 1.8;
+}
+
+#siDurenWelcomeModal .welcome-content p {
+    margin-bottom: 1.2rem;
+    text-align: justify;
+}
+
+#siDurenWelcomeModal .badge {
+    font-size: 1rem !important;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+}
+
+#siDurenWelcomeModal .modal-footer {
+    border-top: 1px solid #dee2e6;
+    background: #f8f9fa;
+    border-radius: 0 0 15px 15px;
+}
+
+#siDurenWelcomeModal .btn-primary {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#siDurenWelcomeModal .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,123,255,0.4);
+}
+
+/* Animation for modal */
+#siDurenWelcomeModal.fade .modal-dialog {
+    transform: scale(0.8);
+    transition: transform 0.3s ease-out;
+}
+
+#siDurenWelcomeModal.show .modal-dialog {
+    transform: scale(1);
+}
+
+/* Text highlight effect */
+#siDurenWelcomeModal .text-primary {
+    background: linear-gradient(120deg, #007bff 0%, #0056b3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Responsive modal */
+@media (max-width: 768px) {
+    #siDurenWelcomeModal .modal-dialog {
+        margin: 1rem;
+    }
+    
+    #siDurenWelcomeModal .modal-body {
+        padding: 1.5rem;
+    }
+    
+    #siDurenWelcomeModal .welcome-content p {
+        font-size: 0.95rem;
+    }
+}
 </style>
 
 <!-- Page Header -->
@@ -190,6 +280,58 @@
             </div>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</div>
+
+<!-- SI-DUREN Welcome Modal -->
+<div class="modal fade" id="siDurenWelcomeModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Selamat Datang di SI-DUREN
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <h4 class="text-primary mb-2">Sistem Informasi Produk Perencanaan Biddokkes Polda Lampung</h4>
+                    <div class="badge bg-success fs-6 mb-3">SI-DUREN</div>
+                </div>
+                
+                <div class="welcome-content">
+                    <p class="lead text-justify">
+                        SI-DUREN adalah sistem informasi digital yang dirancang untuk menyimpan, mengelola, dan membagikan seluruh produk perencanaan di lingkungan Biddokkes Polda Lampung. Sistem ini hadir sebagai bentuk transformasi tata kelola yang lebih terbuka, efisien, dan modern di era digital.
+                    </p>
+                    
+                    <p class="text-justify">
+                        Melalui SI-DUREN, Pimpinan dan seluruh personel Biddokkes Polda Lampung dapat mengakses secara langsung dokumen perencanaan satker. Dengan tujuan utama adalah untuk meningkatkan kinerja organisasi melalui penyediaan informasi yang akurat, terstruktur, dan mudah diakses sebagai pedoman pelaksanaan tugas bagi seluruh unit kerja.
+                    </p>
+                    
+                    <p class="text-justify">
+                        Dengan tersedianya informasi perencanaan secara digital, koordinasi antar bagian menjadi lebih efektif, pengambilan keputusan lebih cepat, serta pelaksanaan program lebih terarah dan tepat sasaran.
+                    </p>
+                    
+                    <p class="text-justify">
+                        SI-DUREN mendukung upaya Biddokkes Polda Lampung dalam mewujudkan organisasi yang berbasis data, berorientasi kinerja, dan selaras dengan semangat Polri Presisi.
+                    </p>
+                    
+                    <div class="text-center mt-4">
+                        <h5 class="text-primary fw-bold">
+                            <i class="fas fa-star me-2"></i>
+                            Akses Mudah. Terarah. Akuntabel.
+                        </h5>
+                        <p class="text-muted">– Itulah SI-DUREN.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    <i class="fas fa-check me-2"></i>Mengerti
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 <?php endif; ?>
@@ -654,6 +796,37 @@ function formatFileSize($bytes) {
                 }
             });
         }
+        
+        // Show SI-DUREN welcome modal for logged in users
+        <?php if (session()->get('logged_in')): ?>
+        const siDurenModal = new bootstrap.Modal(document.getElementById('siDurenWelcomeModal'));
+        
+        // Check if user should see welcome message (new login)
+        const shouldShowWelcome = <?= session()->get('show_welcome_modal') ? 'true' : 'false' ?>;
+        
+        if (shouldShowWelcome) {
+            // Show modal after a short delay
+            setTimeout(() => {
+                siDurenModal.show();
+                
+                // Auto close after 15 seconds
+                setTimeout(() => {
+                    siDurenModal.hide();
+                }, 15000);
+                
+                // Clear the flag after showing
+                <?php if (session()->get('show_welcome_modal')): ?>
+                // Send AJAX request to clear the flag
+                fetch('<?= base_url('userlogin/clear-welcome-flag') ?>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                }).catch(error => console.log('Flag cleared'));
+                <?php endif; ?>
+            }, 1000);
+        }
+        <?php endif; ?>
     });
 </script>
 

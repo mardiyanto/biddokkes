@@ -384,3 +384,117 @@ DEBUG - 2025-08-02 17:20:02 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2025-08-02 17:20:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-08-02 17:20:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2025-08-02 17:20:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:38:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:38:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:38:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:41:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:41:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:43:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:52:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:52:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 20:52:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:00:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:00:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:00:30 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:00:30 --> Sub kategori data: []
+DEBUG - 2025-08-02 21:00:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:00:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:00:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:00:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:00:57 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:00:57 --> Sub kategori data: [{"id_sub_kategori_download":"5","id_kategori_download":"3","nama_sub_kategori_download":"Produk Deteksi","created_at":"2025-08-01 07:05:00"},{"id_sub_kategori_download":"4","id_kategori_download":"3","nama_sub_kategori_download":"Produk Intelijen","created_at":"2025-08-01 07:05:00"}]
+DEBUG - 2025-08-02 21:00:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:01:07 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:01:07 --> Sub kategori data: [{"id_sub_kategori_download":"5","id_kategori_download":"3","nama_sub_kategori_download":"Produk Deteksi","created_at":"2025-08-01 07:05:00"},{"id_sub_kategori_download":"4","id_kategori_download":"3","nama_sub_kategori_download":"Produk Intelijen","created_at":"2025-08-01 07:05:00"}]
+DEBUG - 2025-08-02 21:01:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:01:10 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:01:10 --> Sub kategori data: []
+DEBUG - 2025-08-02 21:01:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:01:27 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:01:27 --> Sub kategori data: [{"id_sub_kategori_download":"9","id_kategori_download":"1","nama_sub_kategori_download":"DOKUMEN PENTING","created_at":"2025-08-02 13:20:18"},{"id_sub_kategori_download":"10","id_kategori_download":"1","nama_sub_kategori_download":"DOKUMEN RAHASIA","created_at":"2025-08-02 13:20:18"},{"id_sub_kategori_download":"2","id_kategori_download":"1","nama_sub_kategori_download":"Peraturan","created_at":"2025-08-01 07:05:00"},{"id_sub_kategori_download":"1","id_kategori_download":"1","nama_sub_kategori_download":"Surat Keputusan","created_at":"2025-08-01 07:05:00"}]
+DEBUG - 2025-08-02 21:01:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:01:31 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:01:31 --> Sub kategori data: [{"id_sub_kategori_download":"9","id_kategori_download":"1","nama_sub_kategori_download":"DOKUMEN PENTING","created_at":"2025-08-02 13:20:18"},{"id_sub_kategori_download":"10","id_kategori_download":"1","nama_sub_kategori_download":"DOKUMEN RAHASIA","created_at":"2025-08-02 13:20:18"},{"id_sub_kategori_download":"2","id_kategori_download":"1","nama_sub_kategori_download":"Peraturan","created_at":"2025-08-01 07:05:00"},{"id_sub_kategori_download":"1","id_kategori_download":"1","nama_sub_kategori_download":"Surat Keputusan","created_at":"2025-08-01 07:05:00"}]
+DEBUG - 2025-08-02 21:01:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:01:36 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:01:36 --> Sub kategori data: [{"id_sub_kategori_download":"9","id_kategori_download":"1","nama_sub_kategori_download":"DOKUMEN PENTING","created_at":"2025-08-02 13:20:18"},{"id_sub_kategori_download":"10","id_kategori_download":"1","nama_sub_kategori_download":"DOKUMEN RAHASIA","created_at":"2025-08-02 13:20:18"},{"id_sub_kategori_download":"2","id_kategori_download":"1","nama_sub_kategori_download":"Peraturan","created_at":"2025-08-01 07:05:00"},{"id_sub_kategori_download":"1","id_kategori_download":"1","nama_sub_kategori_download":"Surat Keputusan","created_at":"2025-08-01 07:05:00"}]
+DEBUG - 2025-08-02 21:01:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:01:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:01:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:02:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:02:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:02:26 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:02:26 --> Sub kategori data: []
+DEBUG - 2025-08-02 21:02:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:02:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:02:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:02:53 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:02:53 --> Sub kategori data: [{"id_sub_kategori_download":"6","id_kategori_download":"6","nama_sub_kategori_download":"Produk REN A","created_at":"2025-08-01 07:05:00"},{"id_sub_kategori_download":"7","id_kategori_download":"6","nama_sub_kategori_download":"Produk REN B","created_at":"2025-08-01 07:05:00"}]
+DEBUG - 2025-08-02 21:02:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-08-02 21:09:04 --> Kategori data: [{"id_kategori_download":"1","nama_kategori_download":"Dokumen","created_at":"2025-07-14 10:23:44"},{"id_kategori_download":"3","nama_kategori_download":"PRODUK DOKKES","created_at":"2025-07-15 15:54:51"},{"id_kategori_download":"5","nama_kategori_download":"PRODUK REN","created_at":"2025-07-15 16:18:24"},{"id_kategori_download":"6","nama_kategori_download":"PRODUK REN TAHUNAN","created_at":"2025-08-01 23:54:32"}]
+INFO - 2025-08-02 21:09:04 --> Sub kategori data: [{"id_sub_kategori_download":"6","id_kategori_download":"6","nama_sub_kategori_download":"Produk REN A","created_at":"2025-08-01 07:05:00"},{"id_sub_kategori_download":"7","id_kategori_download":"6","nama_sub_kategori_download":"Produk REN B","created_at":"2025-08-01 07:05:00"}]
+DEBUG - 2025-08-02 21:09:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:09:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:09:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2025-08-02 21:10:16 --> mysqli_sql_exception: Table 'db_dokkes.profil' doesn't exist in D:\laragon\www\Biddokkes\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 D:\laragon\www\Biddokkes\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT *\nFROM `...', 0)
+#1 D:\laragon\www\Biddokkes\system\Database\BaseConnection.php(738): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 D:\laragon\www\Biddokkes\system\Database\BaseConnection.php(652): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 D:\laragon\www\Biddokkes\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\laragon\www\Biddokkes\system\Model.php(330): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\laragon\www\Biddokkes\system\BaseModel.php(717): CodeIgniter\Model->doFirst()
+#6 D:\laragon\www\Biddokkes\app\Models\ProfilModel.php(22): CodeIgniter\BaseModel->first()
+#7 D:\laragon\www\Biddokkes\app\Controllers\Frontend.php(22): App\Models\ProfilModel->getProfil()
+#8 D:\laragon\www\Biddokkes\system\CodeIgniter.php(933): App\Controllers\Frontend->index()
+#9 D:\laragon\www\Biddokkes\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend))
+#10 D:\laragon\www\Biddokkes\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 D:\laragon\www\Biddokkes\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#12 D:\laragon\www\Biddokkes\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 D:\laragon\www\Biddokkes\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+ERROR - 2025-08-02 21:10:16 --> Frontend home error: Table 'db_dokkes.profil' doesn't exist
+DEBUG - 2025-08-02 21:10:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-08-02 21:10:16 --> ErrorException: Trying to access array offset on value of type null
+[Method: GET, Route: /]
+in APPPATH\Views\frontend\layout\footer.php on line 81.
+ 1 APPPATH\Views\frontend\layout\footer.php(81): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\layout\\footer.php', 81)
+ 2 SYSTEMPATH\View\View.php(224): include('D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\layout\\footer.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(475): CodeIgniter\View\View->render('frontend/layout/footer', null, true)
+ 5 APPPATH\Views\frontend\home.php(597): CodeIgniter\View\View->include('frontend/layout/footer')
+ 6 SYSTEMPATH\View\View.php(224): include('D:\\laragon\\www\\Biddokkes\\app\\Views\\frontend\\home.php')
+ 7 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('frontend/home', [], true)
+ 9 APPPATH\Controllers\Frontend.php(42): view('frontend/home', [...])
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Frontend->index()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2025-08-02 21:10:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:12:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:12:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:13:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:13:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:13:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:14:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:14:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:15:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:15:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:15:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:16:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:16:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:16:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:16:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:17:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:17:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:17:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:17:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:18:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:18:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:18:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-08-02 21:18:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

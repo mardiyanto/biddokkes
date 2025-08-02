@@ -77,7 +77,7 @@
     <div class="top-header">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="contact-info">
                         <?php if (!empty($profilWebsite['telepon'])): ?>
                         <span><i class="fas fa-phone"></i> <?= $profilWebsite['telepon'] ?></span>
@@ -90,7 +90,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="social-links text-end">
                         <?php if (!empty($profilWebsite['facebook'])): ?>
                         <a href="<?= $profilWebsite['facebook'] ?>" target="_blank"><i class="fab fa-facebook-f"></i></a>
