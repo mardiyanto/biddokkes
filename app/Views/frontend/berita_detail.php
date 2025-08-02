@@ -27,37 +27,6 @@
             <!-- Sidebar - Berita Terkait -->
             <div class="col-lg-4 mb-4">
                 <!-- Related News -->
-                <?php if (!empty($berita_terkait)): ?>
-                <div class="sidebar-widget mb-4" data-aos="fade-right">
-                    <h4 class="widget-title">Berita Terkait</h4>
-                    <div class="related-news">
-                        <?php foreach ($berita_terkait as $related): ?>
-                        <div class="related-news-item">
-                            <div class="related-news-image">
-                                <?php if ($related['gambar']): ?>
-                                <img src="<?= base_url('uploads/artikel/' . $related['gambar']) ?>" 
-                                     alt="<?= $related['judul'] ?? 'Gambar Berita Terkait' ?>" 
-                                     class="img-fluid">
-                                <?php else: ?>
-                                <img src="<?= base_url('assets/images/default-news.jpg') ?>" 
-                                     alt="<?= $related['judul'] ?? 'Gambar Berita Terkait' ?>" 
-                                     class="img-fluid">
-                                <?php endif; ?>
-                            </div>
-                            <div class="related-news-content">
-                                <h6 class="related-news-title">
-                                    <a href="<?= base_url('frontberita/detail/' . $related['id_berita']) ?>"><?= $related['judul'] ?? 'Judul Berita Terkait' ?></a>
-                                </h6>
-                                <div class="related-news-meta">
-                                    <span><i class="fas fa-calendar me-1"></i><?= date('d M Y', strtotime($related['created_at'] ?? '')) ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <?php endif; ?>
-           
                 <?php 
                         $beritaModel = new \App\Models\BeritaModel();
                         $latest_news = $beritaModel->getLatest(5);

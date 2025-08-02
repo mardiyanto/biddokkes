@@ -57,7 +57,7 @@ class SubKategoriDownload extends BaseController
         // Validate input
         $rules = [
             'id_kategori_download' => 'required|integer',
-            'nama_sub_kategori_download' => 'required|min_length[3]|max_length[100]'
+            'nama_sub_kategori_download' => 'required'
         ];
 
         if (!$this->validate($rules)) {
@@ -65,23 +65,82 @@ class SubKategoriDownload extends BaseController
         }
 
         $id_kategori_download = $this->request->getPost('id_kategori_download');
-        $nama_sub_kategori_download = $this->request->getPost('nama_sub_kategori_download');
+        $nama_sub_kategori_download_array = $this->request->getPost('nama_sub_kategori_download');
 
-        // Check if name already exists in the same category
-        if ($this->subKategoriModel->isNameExists($nama_sub_kategori_download, $id_kategori_download)) {
-            return redirect()->back()->withInput()->with('error', 'Nama sub kategori sudah ada dalam kategori yang dipilih');
+        // Validate that nama_sub_kategori_download is an array
+        if (!is_array($nama_sub_kategori_download_array)) {
+            return redirect()->back()->withInput()->with('error', 'Data sub kategori tidak valid');
         }
 
-        $data = [
-            'id_kategori_download' => $id_kategori_download,
-            'nama_sub_kategori_download' => $nama_sub_kategori_download
-        ];
+        // Filter out empty values and validate each
+        $valid_sub_kategoris = [];
+        $errors = [];
 
-        try {
-            $this->subKategoriModel->insert($data);
-            return redirect()->to('/subkategoridownload')->with('success', 'Sub kategori download berhasil ditambahkan');
-        } catch (\Exception $e) {
-            log_message('error', 'Error creating sub kategori download: ' . $e->getMessage());
+        foreach ($nama_sub_kategori_download_array as $index => $nama_sub_kategori_download) {
+            $nama_sub_kategori_download = trim($nama_sub_kategori_download);
+            
+            // Skip empty values
+            if (empty($nama_sub_kategori_download)) {
+                continue;
+            }
+
+            // Validate length
+            if (strlen($nama_sub_kategori_download) < 3) {
+                $errors[] = "Sub kategori #" . ($index + 1) . " minimal 3 karakter";
+                continue;
+            }
+
+            if (strlen($nama_sub_kategori_download) > 100) {
+                $errors[] = "Sub kategori #" . ($index + 1) . " maksimal 100 karakter";
+                continue;
+            }
+
+            // Check if name already exists in the same category
+            if ($this->subKategoriModel->isNameExists($nama_sub_kategori_download, $id_kategori_download)) {
+                $errors[] = "Sub kategori '" . $nama_sub_kategori_download . "' sudah ada dalam kategori yang dipilih";
+                continue;
+            }
+
+            $valid_sub_kategoris[] = $nama_sub_kategori_download;
+        }
+
+        // If there are validation errors, return them
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        // If no valid sub kategoris, return error
+        if (empty($valid_sub_kategoris)) {
+            return redirect()->back()->withInput()->with('error', 'Silakan isi minimal satu nama sub kategori');
+        }
+
+        // Insert all valid sub kategoris
+        $success_count = 0;
+        $error_count = 0;
+
+        foreach ($valid_sub_kategoris as $nama_sub_kategori_download) {
+            $data = [
+                'id_kategori_download' => $id_kategori_download,
+                'nama_sub_kategori_download' => $nama_sub_kategori_download
+            ];
+
+            try {
+                $this->subKategoriModel->insert($data);
+                $success_count++;
+            } catch (\Exception $e) {
+                log_message('error', 'Error creating sub kategori download: ' . $e->getMessage());
+                $error_count++;
+            }
+        }
+
+        // Prepare success/error message
+        if ($success_count > 0 && $error_count == 0) {
+            $message = $success_count . ' sub kategori download berhasil ditambahkan';
+            return redirect()->to('/subkategoridownload')->with('success', $message);
+        } elseif ($success_count > 0 && $error_count > 0) {
+            $message = $success_count . ' sub kategori berhasil ditambahkan, ' . $error_count . ' gagal';
+            return redirect()->to('/subkategoridownload')->with('warning', $message);
+        } else {
             return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menambahkan sub kategori download');
         }
     }

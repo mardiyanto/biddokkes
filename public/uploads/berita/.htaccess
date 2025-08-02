@@ -1,0 +1,32 @@
+# Allow access to image files
+<FilesMatch "\.(jpg|jpeg|png|gif)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Prevent access to other file types
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+    AddType image/jpeg .jpg .jpeg
+    AddType image/png .png
+    AddType image/gif .gif
+</IfModule>
+
+# Enable CORS for images
+<IfModule mod_headers.c>
+    <FilesMatch "\.(jpg|jpeg|png|gif)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Custom error pages
+ErrorDocument 403 "Access Forbidden"
+ErrorDocument 404 "File Not Found" 

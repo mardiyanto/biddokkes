@@ -16,10 +16,10 @@ class HalamanModel extends Model
     // Validation rules
     protected $validationRules = [
         'judul' => 'required|min_length[3]|max_length[255]',
-        'slug' => 'required|min_length[3]|max_length[255]|is_unique[halaman.slug,id_halaman,{id_halaman}]',
+        'slug' => 'required|min_length[3]|max_length[255]',
         'konten' => 'required|min_length[10]',
-        'penulis' => 'permit_empty|max_length[100]',
-        'tanggal_publish' => 'permit_empty|valid_date'
+        'penulis' => 'required|max_length[100]',
+        'tanggal_publish' => 'required|valid_date'
     ];
 
     protected $validationMessages = [
@@ -31,17 +31,18 @@ class HalamanModel extends Model
         'slug' => [
             'required' => 'Slug harus diisi',
             'min_length' => 'Slug minimal 3 karakter',
-            'max_length' => 'Slug maksimal 255 karakter',
-            'is_unique' => 'Slug sudah digunakan'
+            'max_length' => 'Slug maksimal 255 karakter'
         ],
         'konten' => [
             'required' => 'Konten harus diisi',
             'min_length' => 'Konten minimal 10 karakter'
         ],
         'penulis' => [
+            'required' => 'Penulis harus diisi',
             'max_length' => 'Penulis maksimal 100 karakter'
         ],
         'tanggal_publish' => [
+            'required' => 'Tanggal publish harus diisi',
             'valid_date' => 'Format tanggal tidak valid'
         ]
     ];
@@ -55,6 +56,15 @@ class HalamanModel extends Model
         return $this->where('slug', $slug)
                     ->where('tanggal_publish <=', date('Y-m-d'))
                     ->first();
+    }
+
+    public function getBySlug($slug)
+    {
+        if (empty($slug)) {
+            return null;
+        }
+        
+        return $this->where('slug', $slug)->first();
     }
 
     public function getPublishedHalaman()

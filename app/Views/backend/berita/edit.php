@@ -55,7 +55,7 @@
               </div>
               <div class="form-group">
                 <label>Isi Berita <span class="text-danger">*</span></label>
-                <textarea name="isi" class="form-control" rows="10" required placeholder="Masukkan isi berita"><?= old('isi', $berita['isi']) ?></textarea>
+                <textarea name="isi" id="isi" class="form-control" rows="10" required placeholder="Masukkan isi berita"><?= old('isi', $berita['isi']) ?></textarea>
               </div>
               <div class="form-group">
                 <label>Gambar</label>
@@ -86,7 +86,33 @@
 </div>
 <?= $this->include('backend/jsadmin') ?>
 
+<script src="<?= base_url('ckeditor/ckeditor.js') ?>"></script>
 <script>
+CKEDITOR.replace('isi', {
+    height: 300,
+    removePlugins: 'elementspath,resize',
+    removeButtons: 'Save,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,About',
+    toolbarGroups: [
+        { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+        { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+        { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+        { name: 'forms', groups: [ 'forms' ] },
+        '/',
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+        { name: 'links', groups: [ 'links' ] },
+        { name: 'insert', groups: [ 'insert' ] },
+        '/',
+        { name: 'styles', groups: [ 'styles' ] },
+        { name: 'colors', groups: [ 'colors' ] },
+        { name: 'tools', groups: [ 'tools' ] },
+        { name: 'others', groups: [ 'others' ] }
+    ],
+    removeDialogTabs: 'image:advanced;link:advanced',
+    filebrowserUploadUrl: '<?= base_url('berita/upload_image') ?>',
+    filebrowserImageUploadUrl: '<?= base_url('berita/upload_image') ?>'
+});
+
 $(function(){
     var dropzone = $('#dropzone-gambar');
     var input = $('#input-gambar');
@@ -191,7 +217,7 @@ $(function(){
         var id_kategori = $('select[name="id_kategori"]').val();
         var penulis = $('input[name="penulis"]').val().trim();
         var tanggal_terbit = $('input[name="tanggal_terbit"]').val();
-        var isi = $('textarea[name="isi"]').val().trim();
+        var isi = CKEDITOR.instances.isi.getData();
         
         if(!judul || !slug || !id_kategori || !penulis || !tanggal_terbit || !isi){
             e.preventDefault();

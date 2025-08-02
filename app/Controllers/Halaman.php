@@ -132,6 +132,19 @@ class Halaman extends BaseController
         $penulis = $this->request->getPost('penulis');
         $tanggal_publish = $this->request->getPost('tanggal_publish');
         
+        // Debug: Log data yang diterima
+        log_message('debug', 'Update Halaman - ID: ' . $id);
+        log_message('debug', 'Judul: ' . $judul);
+        log_message('debug', 'Konten length: ' . strlen($konten));
+        log_message('debug', 'Penulis: ' . $penulis);
+        log_message('debug', 'Tanggal: ' . $tanggal_publish);
+        
+        // Validasi data
+        if (empty($judul) || empty($konten) || empty($penulis) || empty($tanggal_publish)) {
+            session()->setFlashdata('error', 'Semua field yang bertanda * harus diisi!');
+            return redirect()->back()->withInput();
+        }
+        
         // Generate slug dari judul jika judul berubah
         $slug = $halaman['slug'];
         if ($judul !== $halaman['judul']) {
@@ -140,6 +153,18 @@ class Halaman extends BaseController
             if ($this->halamanModel->isSlugExists($slug, $id)) {
                 $slug = $slug . '-' . time();
             }
+        }
+        
+        // Validasi slug manual
+        if (empty($slug)) {
+            session()->setFlashdata('error', 'Slug tidak boleh kosong!');
+            return redirect()->back()->withInput();
+        }
+        
+        // Cek duplikasi slug (kecuali untuk halaman ini sendiri)
+        if ($this->halamanModel->isSlugExists($slug, $id)) {
+            session()->setFlashdata('error', 'Slug sudah digunakan!');
+            return redirect()->back()->withInput();
         }
         
         $data = [
@@ -169,11 +194,23 @@ class Halaman extends BaseController
             $data['gambar'] = $newName;
         }
 
-        if ($this->halamanModel->update($id, $data)) {
-            session()->setFlashdata('success', 'Halaman berhasil diupdate!');
-            return redirect()->to('/halaman');
-        } else {
-            session()->setFlashdata('error', 'Gagal mengupdate halaman!');
+        try {
+            $result = $this->halamanModel->update($id, $data);
+            log_message('debug', 'Update result: ' . ($result ? 'success' : 'failed'));
+            
+            if ($result) {
+                session()->setFlashdata('success', 'Halaman berhasil diupdate!');
+                return redirect()->to('/halaman');
+            } else {
+                // Get validation errors
+                $errors = $this->halamanModel->errors();
+                log_message('error', 'Validation errors: ' . json_encode($errors));
+                session()->setFlashdata('error', 'Gagal mengupdate halaman! ' . implode(', ', $errors));
+                return redirect()->back()->withInput();
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Exception in update: ' . $e->getMessage());
+            session()->setFlashdata('error', 'Terjadi kesalahan: ' . $e->getMessage());
             return redirect()->back()->withInput();
         }
     }
@@ -206,9 +243,10 @@ class Halaman extends BaseController
     // Method untuk frontend
     public function show($slug = null)
     {
-        $halaman = $this->halamanModel->where('slug', $slug)->first();
+        $halaman = $this->halamanModel->getBySlug($slug);
+        
         if (!$halaman) {
-            return redirect()->to('/');
+            return redirect()->to('/')->with('error', 'Halaman tidak ditemukan.');
         }
 
         $data = [
@@ -217,5 +255,51 @@ class Halaman extends BaseController
         ];
 
         return view('frontend/halaman/show', $data);
+    }
+
+    public function upload_image()
+    {
+        // Cek login dan role admin
+        if (!session()->get('logged_in') || session()->get('role') !== 'admin') {
+            return $this->response->setJSON(['error' => 'Unauthorized']);
+        }
+
+        $file = $this->request->getFile('upload');
+        
+        if (!$file || !$file->isValid()) {
+            return $this->response->setJSON(['error' => 'No file uploaded']);
+        }
+
+        // Validasi tipe file
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!in_array($file->getMimeType(), $allowedTypes)) {
+            return $this->response->setJSON(['error' => 'Invalid file type. Only JPG, PNG, and GIF are allowed.']);
+        }
+
+        // Validasi ukuran file (max 2MB)
+        if ($file->getSize() > 2 * 1024 * 1024) {
+            return $this->response->setJSON(['error' => 'File size too large. Maximum 2MB allowed.']);
+        }
+
+        // Buat folder jika belum ada
+        $uploadPath = ROOTPATH . 'public/uploads/halaman/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
+        // Generate nama file yang unik
+        $newName = $file->getRandomName();
+        
+        // Pindahkan file
+        if ($file->move($uploadPath, $newName)) {
+            $url = base_url('uploads/halaman/' . $newName);
+            return $this->response->setJSON([
+                'url' => $url,
+                'uploaded' => 1,
+                'fileName' => $newName
+            ]);
+        } else {
+            return $this->response->setJSON(['error' => 'Failed to upload file']);
+        }
     }
 } 

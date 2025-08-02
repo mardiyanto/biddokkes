@@ -43,7 +43,7 @@
               </div>
               <div class="form-group">
                 <label>Konten Halaman <span class="text-danger">*</span></label>
-                <textarea name="konten" class="form-control" rows="15" required placeholder="Masukkan konten halaman"><?= old('konten', $halaman['konten']) ?></textarea>
+                <textarea name="konten" id="konten" class="form-control" rows="15" required placeholder="Masukkan konten halaman"><?= old('konten', $halaman['konten']) ?></textarea>
               </div>
               <div class="form-group">
                 <label>Gambar</label>
@@ -83,7 +83,33 @@
 </div>
 <?= $this->include('backend/jsadmin') ?>
 
+<script src="<?= base_url('ckeditor/ckeditor.js') ?>"></script>
 <script>
+CKEDITOR.replace('konten', {
+    height: 400,
+    removePlugins: 'elementspath,resize',
+    removeButtons: 'Save,Form,Radio,Checkbox,TextField,Textarea,Select,Button,ImageButton,HiddenField,About',
+    toolbarGroups: [
+        { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+        { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+        { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+        { name: 'forms', groups: [ 'forms' ] },
+        '/',
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+        { name: 'links', groups: [ 'links' ] },
+        { name: 'insert', groups: [ 'insert' ] },
+        '/',
+        { name: 'styles', groups: [ 'styles' ] },
+        { name: 'colors', groups: [ 'colors' ] },
+        { name: 'tools', groups: [ 'tools' ] },
+        { name: 'others', groups: [ 'others' ] }
+    ],
+    removeDialogTabs: 'image:advanced;link:advanced',
+    filebrowserUploadUrl: '<?= base_url('halaman/upload_image') ?>',
+    filebrowserImageUploadUrl: '<?= base_url('halaman/upload_image') ?>'
+});
+
 $(function(){
     var dropzone = $('#dropzone-gambar');
     var input = $('#input-gambar');
@@ -157,7 +183,7 @@ $(function(){
         var judul = $('input[name="judul"]').val().trim();
         var penulis = $('input[name="penulis"]').val().trim();
         var tanggal_publish = $('input[name="tanggal_publish"]').val();
-        var konten = $('textarea[name="konten"]').val().trim();
+        var konten = CKEDITOR.instances.konten.getData();
         
         if(!judul || !penulis || !tanggal_publish || !konten){
             e.preventDefault();

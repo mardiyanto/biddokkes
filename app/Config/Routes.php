@@ -34,6 +34,7 @@ $routes->get('berita/edit/(:num)', 'Berita::edit/$1');
 $routes->post('berita/update/(:num)', 'Berita::update/$1');
 $routes->get('berita/delete/(:num)', 'Berita::delete/$1');
 $routes->post('berita/generate-slug', 'Berita::generateSlugAjax');
+$routes->post('berita/upload_image', 'Berita::upload_image');
 
 // Admin routes (kategori download)
 $routes->get('kategori-download', 'KategoriDownload::index');
@@ -70,6 +71,7 @@ $routes->post('halaman/store', 'Halaman::store');
 $routes->get('halaman/edit/(:num)', 'Halaman::edit/$1');
 $routes->post('halaman/update/(:num)', 'Halaman::update/$1');
 $routes->get('halaman/delete/(:num)', 'Halaman::delete/$1');
+$routes->post('halaman/upload_image', 'Halaman::upload_image');
 
 // Admin routes (slide)
 $routes->get('slide', 'Slide::index');

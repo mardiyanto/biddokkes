@@ -246,4 +246,50 @@ class Berita extends BaseController
         
         return $this->response->setJSON(['slug' => $slug]);
     }
+
+    public function upload_image()
+    {
+        // Cek login dan role admin
+        if (!session()->get('logged_in') || session()->get('role') !== 'admin') {
+            return $this->response->setJSON(['error' => 'Unauthorized']);
+        }
+
+        $file = $this->request->getFile('upload');
+        
+        if (!$file || !$file->isValid()) {
+            return $this->response->setJSON(['error' => 'No file uploaded']);
+        }
+
+        // Validasi tipe file
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!in_array($file->getMimeType(), $allowedTypes)) {
+            return $this->response->setJSON(['error' => 'Invalid file type. Only JPG, PNG, and GIF are allowed.']);
+        }
+
+        // Validasi ukuran file (max 2MB)
+        if ($file->getSize() > 2 * 1024 * 1024) {
+            return $this->response->setJSON(['error' => 'File size too large. Maximum 2MB allowed.']);
+        }
+
+        // Buat folder jika belum ada
+        $uploadPath = ROOTPATH . 'public/uploads/berita/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
+        // Generate nama file yang unik
+        $newName = $file->getRandomName();
+        
+        // Pindahkan file
+        if ($file->move($uploadPath, $newName)) {
+            $url = base_url('uploads/berita/' . $newName);
+            return $this->response->setJSON([
+                'url' => $url,
+                'uploaded' => 1,
+                'fileName' => $newName
+            ]);
+        } else {
+            return $this->response->setJSON(['error' => 'Failed to upload file']);
+        }
+    }
 } 
